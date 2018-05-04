@@ -1,0 +1,19 @@
+{
+  "name": "minercalcboot.loc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "anchor.js": "^1.0.6",
+    "chart.js": "^2.7.2",
+    "gulp": "^3.9.1",
+    "gulp-livereload": "^3.8.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
