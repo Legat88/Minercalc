@@ -207,9 +207,9 @@ $(document).ready(function () {
             data: {
                 get_gpu: gpuName
             }
-        }).done(function (data) {
+        }).done(function(data) {
             Object.keys(data).forEach(function (key) {
-                $('input#' + key + '.edit').val(data[key]);
+                $('input#'+key+'.edit').val(data[key]);
             });
         });
     });
@@ -222,9 +222,9 @@ $(document).ready(function () {
             data: {
                 get_asic: asicName
             }
-        }).done(function (data) {
+        }).done(function(data) {
             Object.keys(data).forEach(function (key) {
-                $('input#' + key + '.edit').val(data[key]);
+                $('input#'+key+'.edit').val(data[key]);
             });
         });
     });
@@ -237,10 +237,10 @@ $(document).ready(function () {
             data: {
                 get_algo: algoName
             }
-        }).done(function (data) {
-            var miner = data.miner;
+        }).done(function(data) {
+            var miner=data.miner;
             $('input#miner').val(miner);
-            var measure = data.measure;
+            var measure=data.measure;
             $('select#measure').val(measure);
         });
     });
@@ -253,23 +253,23 @@ $(document).ready(function () {
             data: {
                 get_coin: coinName
             }
-        }).done(function (data) {
-            var code = data.code;
+        }).done(function(data) {
+            var code=data.code;
             $('input#code').val(code);
-            var algo = data.algo;
+            var algo=data.algo;
             $('select#algo').val(algo);
-            var blockreward = data.block_reward;
+            var blockreward=data.block_reward;
             $('input#blockreward').val(blockreward);
-            var url = data.url;
+            var url=data.url;
             $('input#url').val(url);
-            var parameter = data.parameter;
+            var parameter=data.parameter;
             $('input#parameter').val(parameter);
-            var addition = data.addition;
+            var addition=data.addition;
             $('input#addition').val(addition);
         });
     });
     $('select#pool_name_remove').change(function () {
-        var poolName = $('select#pool_name_remove').val();
+        var poolName=$('select#pool_name_remove').val();
         $.ajax({
             type: 'POST',
             url: '../scripts/fetch_pool_coins.php',
@@ -284,7 +284,7 @@ $(document).ready(function () {
         })
     });
     $('select#pool_name_edit').change(function () {
-        var poolName = $('select#pool_name_edit').val();
+        var poolName=$('select#pool_name_edit').val();
         $.ajax({
             type: 'POST',
             url: '../scripts/fetch_pool_coins.php',
@@ -300,8 +300,8 @@ $(document).ready(function () {
         })
     });
     $('select#coin_pool_edit, select#pool_name_edit').on("change", function () {
-        var poolName = $('select#pool_name_edit').val();
-        var coinName = $('select#coin_pool_edit').val();
+        var poolName=$('select#pool_name_edit').val();
+        var coinName=$('select#coin_pool_edit').val();
         $.ajax({
             type: 'POST',
             url: '../scripts/fetch_pool_addresses.php',
@@ -312,9 +312,9 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log(data);
-                var address = data.address;
+                var address=data.address;
                 $('input#pool_address_edit').val(address);
-                var port = data.port;
+                var port=data.port;
                 $('input#pool_port_edit').val(port);
             }
         })

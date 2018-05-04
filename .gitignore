@@ -1,6 +1,6 @@
 /admin/pass.php
 /scripts/db.php
-
+/.idea
 # Created by https://www.gitignore.io/api/node,phpstorm
 
 ### Node ###
@@ -130,4 +130,5 @@ fabric.properties
 .idea/sonarlint
 
 
+<<<<<<< HEAD
 # End of https://www.gitignore.io/api/node,phpstorm

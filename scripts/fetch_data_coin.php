@@ -1,6 +1,6 @@
 <?php
 require "db.php";
-if (isset($_POST['get_coin'])) {
+if(isset($_POST['get_coin'])) {
     $coin = $_POST['get_coin'];
     $stmt = $dbh->prepare("SELECT code, algo, block_reward, url, parameter, addition FROM coins WHERE name=?");
     $stmt->execute(array($coin)); //Обязательно массив, строку не возьмет
