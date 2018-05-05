@@ -9,11 +9,20 @@ $price=$info[0]['price_usd'];
 $code=$_POST['code'];
 $algo=$_POST['algo'];
 $blockreward=$_POST['blockreward'];
-$url=$_POST['url'];
-$parameter=$_POST['parameter'];
-$addition=$_POST['addition'];
+if (isset($_POST['rpc'])) {
+    $rpc = 1;
+    $rpcuser = $_POST['rpcuser'];
+    $rpcpassword = $_POST['rpcpassword'];
+    $rpcport = $_POST['rpcport'];
+    $stmt = $dbh->prepare("INSERT INTO coins (name, code, algo, block_reward, rpc, rpcuser, rpcpassword, rpcport) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute(array($coin_name, $code, $algo, $blockreward, $rpc, $rpcuser, $rpcpassword, $rpcport));
+} else {
+    $url = $_POST['url'];
+    $parameter = $_POST['parameter'];
+    $addition = $_POST['addition'];
+    $stmt = $dbh->prepare("INSERT INTO coins (name, code, algo, block_reward, url,parameter, addition) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute(array($coin_name, $code, $algo, $blockreward, $url, $parameter, $addition));
+}
 $stmt=$dbh->query("ALTER TABLE difficulty ADD $code DOUBLE");
-$stmt=$dbh->prepare("INSERT INTO coins (name, code, algo, block_reward, url,parameter, addition) VALUES (?, ?, ?, ?, ?, ?, ?)");
-$stmt->execute(array($coin_name, $code, $algo, $blockreward, $url, $parameter, $addition));
 $stmt=$dbh->prepare("INSERT INTO price (coin, price) VALUES (?, ?)");
 $stmt->execute(array($coin_name, $price));

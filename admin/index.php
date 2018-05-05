@@ -485,8 +485,8 @@ require_once('pass.php');
 
                 <div class="modal-body">
                     <form action="" id="addCoin" method="post">
-                        <div class="form-group col-8 text-center mx-auto">
-                            <div class="row">
+                        <div class="form-group col-8 mx-auto">
+                            <div class="row justify-content-center">
                                 <div class="col">
                                     <h6 class="text-center">Name:</h6>
                                     <input type="text" class="form-control" name="coin_name" placeholder="Name of Coin">
@@ -496,7 +496,7 @@ require_once('pass.php');
                                     <input type="text" class="form-control" name="code" placeholder="Code">
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row justify-content-center">
                                 <div class="col">
                                     <h6 class="text-center">Algo:</h6>
                                     <select class="form-control selectize" name="algo">
@@ -512,22 +512,54 @@ require_once('pass.php');
                                     <input type="text" class="form-control" name="blockreward" placeholder="Block reward">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <h6 class="text-center">URL:</h6>
-                                    <input type="text" class="form-control" name="url" placeholder="url of api">
+                            <br>
+                            <div class="row justify-content-center">
+                                <div class="col-auto custom-control custom-checkbox">
+                                    <h6>
+                                        <input type="checkbox" class="form-control custom-control-input" id="rpcCheck"
+                                               name="rpc">
+                                        <label class="custom-control-label" for="rpcCheck">RPC</label>
+                                    </h6>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <h6 class="text-center">Parameter:</h6>
-                                    <input type="text" class="form-control" name="parameter" placeholder="parameter">
+
+                            <div id="api">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="text-center">URL:</h6>
+                                        <input type="text" class="form-control" name="url" placeholder="url of api">
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <h6 class="text-center">Addition:</h6>
-                                    <input type="text" class="form-control" name="addition" placeholder="addition">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="text-center">Parameter:</h6>
+                                        <input type="text" class="form-control" name="parameter"
+                                               placeholder="parameter">
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="text-center">Addition:</h6>
+                                        <input type="text" class="form-control" name="addition" placeholder="addition">
+                                    </div>
                                 </div>
                             </div>
+                            <div id="rpc">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="text-center">RPC user:</h6>
+                                        <input type="text" class="form-control" name="rpcuser" placeholder="RPC user">
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="text-center">RPC password:</h6>
+                                        <input type="text" class="form-control" name="rpcpassword"
+                                               placeholder="RPC password">
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="text-center">RPC port:</h6>
+                                        <input type="text" class="form-control" name="rpcport" placeholder="RPC port">
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </form>
                 </div>

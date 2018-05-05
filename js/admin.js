@@ -318,5 +318,20 @@ $(document).ready(function () {
                 $('input#pool_port_edit').val(port);
             }
         })
-    })
+    });
+    $(function RpcToggle() {
+        $('div#api').show();
+        $('div#rpc').hide();
+        $("input#rpcCheck").click(function () {
+            var rpc = $(this).is(':checked');
+            console.log(rpc);
+            if (rpc === true) {
+                $('div#api').hide();
+                $('div#rpc').show();
+            } else {
+                $('div#api').show();
+                $('div#rpc').hide();
+            }
+        });
+    });
 });
