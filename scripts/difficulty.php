@@ -1,12 +1,18 @@
 <?php
 require "db.php";
 require_once('easybitcoin.php');
+$arrContextOptions = array(
+    "ssl" => array(
+        "verify_peer" => false,
+        "verify_peer_name" => false,
+    ),
+);
 $stmt = $dbh->query("SELECT * FROM coins");
 while ($result = $stmt->fetch(PDO::FETCH_LAZY)) {
     $rpc_mode = $result->rpc;
     if ($rpc_mode == 0) {
         $url = $result->url;
-        if (!$data = file_get_contents($url)) {
+        if (!$data = file_get_contents($url, false, stream_context_create($arrContextOptions))) {
             continue;
         } else {
             $coin[] = $result->code;
