@@ -244,7 +244,28 @@ $(document).ready(function () {
             $('select#measure').val(measure);
         });
     });
+    // $(function RpcToggleEdit(api, rpc) {
+    //     api.show();
+    //     rpc.hide();
+    //     var rpcEdit=$("input#rpcCheckEdit").is(':checked');
+    //     console.log(rpcEdit);
+    //     if (rpcEdit === true) {
+    //         api.hide();
+    //         rpc.show();
+    //     } else {
+    //         api.show();
+    //         rpc.hide();
+    //     }
+    // $("input#rpcCheckEdit").click(function () {
+    //     var rpcEdit = $(this).is(':checked');
+    //     console.log(rpc);
+    //
+    // });
+    // });
+
     $('select#coin_name_edit').change(function () {
+
+        $('form#editCoin').find("input").val("");
         var coinName = $('select#coin_name_edit').val();
         $.ajax({
             type: 'POST',
@@ -260,12 +281,26 @@ $(document).ready(function () {
             $('select#algo').val(algo);
             var blockreward=data.block_reward;
             $('input#blockreward').val(blockreward);
-            var url=data.url;
-            $('input#url').val(url);
-            var parameter=data.parameter;
-            $('input#parameter').val(parameter);
-            var addition=data.addition;
-            $('input#addition').val(addition);
+            var rpc_mode = data.rpc;
+            console.log(rpc_mode);
+            if (rpc_mode === 0) {
+                $('input#rpcCheckEdit').prop('checked', false);
+                var url = data.url;
+                $('input#url').val(url);
+                var parameter = data.parameter;
+                $('input#parameter').val(parameter);
+                var addition = data.addition;
+                $('input#addition').val(addition);
+            } else {
+                $('input#rpcCheckEdit').prop('checked', true);
+                var rpcuser = data.rpcuser;
+                $('input#rpcuserEdit').val(rpcuser);
+                var rpcpassword = data.rpcpassword;
+                $('input#rpcpasswordEdit').val(rpcpassword);
+                var rpcport = data.rpcport;
+                $('input#rpcportEdit').val(rpcport);
+            }
+
         });
     });
     $('select#pool_name_remove').change(function () {
@@ -334,4 +369,20 @@ $(document).ready(function () {
             }
         });
     });
+    (function RpcToggleEdit() {
+        $('div#apiEdit').show();
+        $('div#rpcEdit').hide();
+        $("input#rpcCheckEdit").click(function () {
+            var rpc_check_edit = $(this).is(':checked');
+            if (rpc_check_edit === true) {
+                $('div#apiEdit').hide();
+                $('div#rpcEdit').show();
+            } else {
+                $('div#apiEdit').show();
+                $('div#rpcEdit').hide();
+                $('input#rpcCheckEdit').prop('checked', false);
+            }
+        });
+    })();
+
 });

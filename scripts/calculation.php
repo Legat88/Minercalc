@@ -55,17 +55,32 @@ foreach ($new_array as $key=>$value) {
                         } else {
                             $interval_profit=1;
                         }
-                        if ($interval_diff=='current') {
-                            $net_info=$dbh->query("SELECT $coin_code as difficulty FROM difficulty WHERE $coin_code > 10 ORDER BY id DESC LIMIT 1");
-                        } elseif ($interval_diff=='24h') {
-                            $net_info=$dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 10 AND datetime >= CURRENT_TIME - INTERVAL 1 DAY");
-                        } elseif ($interval_diff=='week') {
-                            $net_info=$dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 10 AND datetime >= CURRENT_TIME - INTERVAL 7 DAY");
-                        } elseif ($interval_diff=='month') {
-                            $net_info=$dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 10 AND datetime >= CURRENT_TIME - INTERVAL 30 DAY");
+                        if ($coin_code == 'LUX') {
+                            if ($interval_diff == 'current') {
+                                $net_info = $dbh->query("SELECT $coin_code as difficulty FROM difficulty WHERE $coin_code > 10 ORDER BY id DESC LIMIT 1");
+                            } elseif ($interval_diff == '24h') {
+                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 10 AND datetime > DATE_SUB(NOW(), INTERVAL 1 DAY)");
+                            } elseif ($interval_diff == 'week') {
+                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 10 AND datetime > DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                            } elseif ($interval_diff == 'month') {
+                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 10 AND datetime > DATE_SUB(NOW(), INTERVAL 30 DAY)");
+                            } else {
+                                $net_info = $dbh->query("SELECT $coin_code as difficulty FROM difficulty WHERE $coin_code > 10 ORDER BY id DESC LIMIT 1");
+                            }
                         } else {
-                            $net_info=$dbh->query("SELECT $coin_code as difficulty FROM difficulty WHERE $coin_code > 10 ORDER BY id DESC LIMIT 1");
+                            if ($interval_diff == 'current') {
+                                $net_info = $dbh->query("SELECT $coin_code as difficulty FROM difficulty ORDER BY id DESC LIMIT 1");
+                            } elseif ($interval_diff == '24h') {
+                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE datetime > DATE_SUB(NOW(), INTERVAL 1 DAY)");
+                            } elseif ($interval_diff == 'week') {
+                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE datetime > DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                            } elseif ($interval_diff == 'month') {
+                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE datetime > DATE_SUB(NOW(), INTERVAL 30 DAY)");
+                            } else {
+                                $net_info = $dbh->query("SELECT $coin_code as difficulty FROM difficulty ORDER BY id DESC LIMIT 1");
+                            }
                         }
+
                         $result_net=$net_info->fetch(PDO::FETCH_LAZY);
                         $difficulty=$result_net->difficulty;
                         if (!$difficulty) {

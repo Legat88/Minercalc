@@ -510,7 +510,8 @@ require_once('pass.php');
                                 </div>
                                 <div class="col">
                                     <h6 class="text-center">Block reward:</h6>
-                                    <input type="text" class="form-control" name="blockreward" placeholder="Block reward">
+                                    <input type="number" class="form-control" name="blockreward"
+                                           placeholder="Block reward">
                                 </div>
                             </div>
                             <br>
@@ -556,7 +557,7 @@ require_once('pass.php');
                                     </div>
                                     <div class="col">
                                         <h6 class="text-center">RPC port:</h6>
-                                        <input type="text" class="form-control" name="rpcport" placeholder="RPC port">
+                                        <input type="number" class="form-control" name="rpcport" placeholder="RPC port">
                                     </div>
                                 </div>
                             </div>
@@ -617,23 +618,60 @@ require_once('pass.php');
                                 </div>
                                 <div class="col">
                                     <h6 class="text-center">Block reward:</h6>
-                                    <input type="text" class="form-control" name="blockreward" id="blockreward" placeholder="Block reward">
+                                    <input type="number" class="form-control" name="blockreward" id="blockreward"
+                                           placeholder="Block reward">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <h6 class="text-center">URL:</h6>
-                                    <input type="text" class="form-control" name="url" id="url" placeholder="url of api">
+                            <br>
+                            <div class="row justify-content-center">
+                                <div class="col-auto custom-control custom-checkbox">
+                                    <h6>
+                                        <input type="checkbox" class="form-control custom-control-input"
+                                               id="rpcCheckEdit"
+                                               name="rpc">
+                                        <label class="custom-control-label" for="rpcCheck">RPC</label>
+                                    </h6>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <h6 class="text-center">Parameter:</h6>
-                                    <input type="text" class="form-control" name="parameter" id="parameter" placeholder="parameter">
+                            <div id="apiEdit">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="text-center">URL:</h6>
+                                        <input type="text" class="form-control" name="url" id="url"
+                                               placeholder="url of api">
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <h6 class="text-center">Addition:</h6>
-                                    <input type="text" class="form-control" name="addition" id="addition" placeholder="addition">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="text-center">Parameter:</h6>
+                                        <input type="text" class="form-control" name="parameter" id="parameter"
+                                               placeholder="parameter">
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="text-center">Addition:</h6>
+                                        <input type="text" class="form-control" name="addition" id="addition"
+                                               placeholder="addition">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="rpcEdit">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="text-center">RPC user:</h6>
+                                        <input type="text" class="form-control" name="rpcuser" id="rpcuserEdit"
+                                               placeholder="RPC user">
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="text-center">RPC password:</h6>
+                                        <input type="text" class="form-control" name="rpcpassword" id="rpcpasswordEdit"
+                                               placeholder="RPC password">
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="text-center">RPC port:</h6>
+                                        <input type="number" class="form-control" name="rpcport" id="rpcportEdit"
+                                               placeholder="RPC port">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -729,7 +767,7 @@ require_once('pass.php');
                                 </div>
                                 <div class="col">
                                     <h6 class="text-center">Port:</h6>
-                                    <input type="text" class="form-control" name="port" placeholder="Port">
+                                    <input type="number" class="form-control" name="port" placeholder="Port">
                                 </div>
                             </div>
                         </div>
@@ -783,7 +821,8 @@ require_once('pass.php');
                                 </div>
                                 <div class="col">
                                     <h6 class="text-center">Port:</h6>
-                                    <input type="text" class="form-control" name="port" placeholder="Port" id="pool_port_edit">
+                                    <input type="number" class="form-control" name="port" placeholder="Port"
+                                           id="pool_port_edit">
                                 </div>
                             </div>
                         </div>
@@ -854,7 +893,7 @@ require_once('pass.php');
                 <h4 class="text-center">Videocards:</h4>
                 <div class="form-row">
                     <div class="col-xl-2">
-                        <input type="text" class="form-control qty" placeholder="Qty" id="qtyVideocards">
+                        <input type="number" class="form-control qty" placeholder="Qty" id="qtyVideocards">
                     </div>
                     <div class="col-xl-10">
                         <select class="form-control selectize" id="gpu_select" data-live-search="true">
@@ -873,7 +912,7 @@ require_once('pass.php');
                 <h4 class="text-center">ASICs:</h4>
                 <div class="form-row">
                     <div class="col-xl-2">
-                        <input type="text" class="form-control qty" placeholder="Qty" id="qtyASICs">
+                        <input type="number" class="form-control qty" placeholder="Qty" id="qtyASICs">
                     </div>
                     <div class="col-xl-10">
                         <select class="form-control selectize" id="asic_select">
