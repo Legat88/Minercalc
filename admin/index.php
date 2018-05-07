@@ -15,6 +15,7 @@ require_once('pass.php');
     <!-- Bootstrap CSS -->
     <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/theme.bootstrap_4.min.css">
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -981,5 +982,9 @@ require_once('pass.php');
 <script src="urls.js"></script>
 <script src="../js/main.js"></script>
 <script src="../js/admin.js"></script>
+<script type="text/javascript" src="../js/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="../js/jquery.metadata.min.js"></script>
+<script type="text/javascript" src="../js/jquery.tablesorter.pager.min.js"></script>
+<script type="text/javascript" src="../js/jquery.tablesorter.widgets.js"></script>
 </body>
 </html>

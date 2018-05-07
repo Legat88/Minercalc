@@ -17,7 +17,7 @@ foreach ($new_array as $key=>$value) {
 
     <div class="row justify-content-center">
         <div class="col-12 col-md-9 col-xl-6">
-            <table class="table table-responsive-sm table-hover table-bordered text-center info ">
+            <table class="table table-responsive-sm table-hover table-bordered text-center info">
                 <thead>
                 <tr>
                     <th>Name of coin</th>
@@ -97,7 +97,32 @@ foreach ($new_array as $key=>$value) {
                     }
                 }
                 ?>
+
                 </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="6" class="ts-pager">
+                        <div class="form-inline justify-content-center">
+                            <div class="btn-group btn-group-sm mx-1" role="group">
+                                <button type="button" class="btn btn-primary first" title="first">⇤</button>
+                                <button type="button" class="btn btn-primary prev" title="previous">←</button>
+                            </div>
+                            <span class="pagedisplay"></span>
+                            <div class="btn-group btn-group-sm mx-1" role="group">
+                                <button type="button" class="btn btn-primary next" title="next">→</button>
+                                <button type="button" class="btn btn-primary last" title="last">⇥</button>
+                            </div>
+                            <!--                            <select class="form-control-sm custom-select px-1 pagesize" title="Select page size">-->
+                            <!--                                <option selected="selected" value="10">10</option>-->
+                            <!--                                <option value="20">20</option>-->
+                            <!--                                <option value="30">30</option>-->
+                            <!--                                <option value="all">All Rows</option>-->
+                            <!--                            </select>-->
+                            <!--                            <select class="form-control-sm custom-select px-4 mx-1 pagenum" title="Select page number"></select>-->
+                        </div>
+                    </th>
+                </tr>
+                </tfoot>
             </table>
             <script type="text/javascript">
                 $(document).ready(function () {
@@ -150,28 +175,39 @@ foreach ($new_array as $key=>$value) {
                             }
                         });
                     });
+                    $('table.info')
+                        .tablesorter({
+                            theme: "bootstrap",
+                            sortList: [5, 0]
+                        })
+                        .tablesorterPager({
+                            container: $(".ts-pager"),
+                            cssGoto: ".pagenum",
+                            removeRows: false,
+                            output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                        });
                 });
             </script>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <!--            <nav aria-label="Page navigation example">-->
+            <!--                <ul class="pagination justify-content-center">-->
+            <!--                    <li class="page-item">-->
+            <!--                        <a class="page-link" href="#" aria-label="Previous">-->
+            <!--                            <span aria-hidden="true">&laquo;</span>-->
+            <!--                            <span class="sr-only">Previous</span>-->
+            <!--                        </a>-->
+            <!--                    </li>-->
+            <!--                    <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+            <!--                    <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+            <!--                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+            <!--                    <li class="page-item">-->
+            <!--                        <a class="page-link" href="#" aria-label="Next">-->
+            <!--                            <span aria-hidden="true">&raquo;</span>-->
+            <!--                            <span class="sr-only">Next</span>-->
+            <!--                        </a>-->
+            <!--                    </li>-->
+            <!--                </ul>-->
+            <!--            </nav>-->
         </div>
         <div class="col-md-8 info" id="coinInfo">
         </div>

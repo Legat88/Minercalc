@@ -47,6 +47,10 @@ $(document).ready(function () {
                 $('div#content').css('min-height', 0);
                 $('div#content').height('auto');
                 $('div#calculation').html(data);
+                $('table.info').tablesorter({
+                    theme: "bootstrap",
+                    sortList: [[5, 1]]
+                });
                 $('i#spinner').hide();
             }
         })
@@ -88,6 +92,21 @@ $(document).ready(function () {
         })
     });
 });
+
+// $('table.info').on('load', function () {
+//     $('table.info')
+//     .tablesorter({
+//         theme : "bootstrap",
+//         sortList: [5,0]
+//     })
+//     .tablesorterPager({
+//         container: $(".ts-pager"),
+//         cssGoto  : ".pagenum",
+//         removeRows: false,
+//         output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+//     })
+//
+// });
 
 function inputDiff() {
     $('button#calc').click();

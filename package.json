@@ -7,7 +7,8 @@
     "anchor.js": "^1.0.6",
     "chart.js": "^2.7.2",
     "gulp": "^3.9.1",
-    "gulp-livereload": "^3.8.1"
+    "gulp-livereload": "^3.8.1",
+    "tablesorter": "^2.30.3"
   },
   "devDependencies": {},
   "scripts": {
