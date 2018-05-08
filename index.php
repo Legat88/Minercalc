@@ -43,7 +43,7 @@ require "scripts/db.php"; ?>
                 <h4 class="text-center">Videocards:</h4>
                 <div class="form-row">
                     <div class="col-xl-2">
-                        <input type="number" class="form-control qty" placeholder="Qty" id="qtyVideocards">
+                        <input type="number" class="form-control qty" placeholder="Qty" id="qtyVideocards" min="1">
                     </div>
                     <div class="col-xl-10">
                         <select class="form-control" id="gpu_select">
@@ -61,7 +61,7 @@ require "scripts/db.php"; ?>
                 <h4 class="text-center">ASICs:</h4>
                 <div class="form-row">
                     <div class="col-xl-2">
-                        <input type="number" class="form-control qty" placeholder="Qty" id="qtyASICs">
+                        <input type="number" class="form-control qty" placeholder="Qty" id="qtyASICs" min="1">
                     </div>
                     <div class="col-xl-10">
                         <select class="form-control" id="asic_select">
