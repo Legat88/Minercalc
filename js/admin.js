@@ -284,6 +284,10 @@ $(document).ready(function () {
                 $('input#rpcpasswordEdit').val(rpcpassword);
                 var rpcport = data.rpcport;
                 $('input#rpcportEdit').val(rpcport);
+                var rpcmethod = data.rpc_method;
+                $('input#rpcmethodEdit').val(rpcmethod);
+                var rpcparameter = data.rpc_parameter;
+                $('input#rpcparameterEdit').val(rpcparameter);
             }
 
         });

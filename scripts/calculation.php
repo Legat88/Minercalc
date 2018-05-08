@@ -92,6 +92,8 @@ foreach ($new_array as $key=>$value) {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty*8192);
                             } elseif ($algo=='Cryptonight') {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty);
+                            } elseif ($algo == 'SK1024') {
+                                $qty = ($my_hashrate * $block_reward * $DAY * $interval_profit) / ($difficulty * 32288028000);
                             } else {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty*4294967296);
                             }

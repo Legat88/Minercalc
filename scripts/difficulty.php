@@ -32,9 +32,22 @@ while ($result = $stmt->fetch(PDO::FETCH_LAZY)) {
         $rpcuser = $result->rpcuser;
         $rpcpassword = $result->rpcpassword;
         $rpcport = $result->rpcport;
+        $rpc_method = $result->rpc_method;
+        $rpc_parameter = $result->rpc_parameter;
         $rpc = new Bitcoin($rpcuser, $rpcpassword, 'localhost', $rpcport);
-        $rpc->getinfo();
-        $difficulty[] = $rpc->response['result']['difficulty'];
+        if ($rpc_method == NULL && $rpc_parameter == NULL) {
+            $rpc->getinfo();
+            $difficulty[] = $rpc->response['result']['difficulty'];
+        } elseif ($rpc_method != NULL && $rpc_parameter != NULL) {
+            $rpc->$rpc_method();
+            $difficulty[] = $rpc->response['result'][$rpc_parameter];
+        } elseif ($rpc_method != NULL && $rpc_parameter == NULL) {
+            $rpc->$rpc_method();
+            $difficulty[] = $rpc->response['result']['difficulty'];
+        } elseif ($rpc_method == NULL && $rpc_parameter != NULL) {
+            $rpc->getinfo();
+            $difficulty[] = $rpc->response['result'][$rpc_parameter];
+        }
     }
 
 }

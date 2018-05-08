@@ -9,7 +9,9 @@ if (isset($_POST['rpc'])) {
     $rpcuser = $_POST['rpcuser'];
     $rpcpassword = $_POST['rpcpassword'];
     $rpcport = $_POST['rpcport'];
-    $query = "UPDATE coins SET code='$code', algo='$algo', block_reward=$blockreward, rpc=$rpc, rpcuser='$rpcuser', rpcpassword='$rpcpassword', rpcport=$rpcport WHERE name='$coin_name'";
+    $rpc_method = $_POST['rpc_method'];
+    $rpc_parameter = $_POST['rpc_parameter'];
+    $query = "UPDATE coins SET code='$code', algo='$algo', block_reward=$blockreward, rpc=$rpc, rpcuser='$rpcuser', rpcpassword='$rpcpassword', rpcport=$rpcport, rpc_method='$rpc_method', rpc_parameter='$rpc_parameter' WHERE name='$coin_name'";
     $dbh->query($query);
 } else {
     $rpc = 0;

@@ -560,6 +560,18 @@ require_once('pass.php');
                                         <input type="number" class="form-control" name="rpcport" placeholder="RPC port">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="text-center">RPC method:</h6>
+                                        <input type="text" class="form-control" name="rpc_method"
+                                               placeholder="RPC method">
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="text-center">RPC parameter:</h6>
+                                        <input type="text" class="form-control" name="rpc_parameter"
+                                               placeholder="RPC parameter">
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -671,6 +683,19 @@ require_once('pass.php');
                                         <h6 class="text-center">RPC port:</h6>
                                         <input type="number" class="form-control" name="rpcport" id="rpcportEdit"
                                                placeholder="RPC port">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="text-center">RPC method:</h6>
+                                        <input type="text" class="form-control" name="rpc_method" id="rpcmethodEdit"
+                                               placeholder="RPC method">
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="text-center">RPC parameter:</h6>
+                                        <input type="text" class="form-control" name="rpc_parameter"
+                                               id="rpcparameterEdit"
+                                               placeholder="RPC parameter">
                                     </div>
                                 </div>
                             </div>

@@ -14,8 +14,10 @@ if (isset($_POST['rpc'])) {
     $rpcuser = $_POST['rpcuser'];
     $rpcpassword = $_POST['rpcpassword'];
     $rpcport = $_POST['rpcport'];
-    $stmt = $dbh->prepare("INSERT INTO coins (name, code, algo, block_reward, rpc, rpcuser, rpcpassword, rpcport) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute(array($coin_name, $code, $algo, $blockreward, $rpc, $rpcuser, $rpcpassword, $rpcport));
+    $rpc_method = $_POST['rpc_method'];
+    $rpc_parameter = $_POST['rpc_parameter'];
+    $stmt = $dbh->prepare("INSERT INTO coins (name, code, algo, block_reward, rpc, rpcuser, rpcpassword, rpcport, rpc_method, rpc_parameter) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute(array($coin_name, $code, $algo, $blockreward, $rpc, $rpcuser, $rpcpassword, $rpcport, $rpc_method, $rpc_parameter));
 } else {
     $url = $_POST['url'];
     $parameter = $_POST['parameter'];
