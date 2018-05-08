@@ -893,7 +893,8 @@ require_once('pass.php');
                 <h4 class="text-center">Videocards:</h4>
                 <div class="form-row">
                     <div class="col-xl-2">
-                        <input type="number" class="form-control qty" placeholder="Qty" id="qtyVideocards" min="1">
+                        <input type="number" class="form-control qty" placeholder="Qty" id="qtyVideocards" min="1"
+                               oninput="validity.valid||(value='');">
                     </div>
                     <div class="col-xl-10">
                         <select class="form-control selectize" id="gpu_select" data-live-search="true">
@@ -912,7 +913,8 @@ require_once('pass.php');
                 <h4 class="text-center">ASICs:</h4>
                 <div class="form-row">
                     <div class="col-xl-2">
-                        <input type="number" class="form-control qty" placeholder="Qty" id="qtyASICs" min="1">
+                        <input type="number" class="form-control qty" placeholder="Qty" id="qtyASICs" min="1"
+                               oninput="validity.valid||(value='');">
                     </div>
                     <div class="col-xl-10">
                         <select class="form-control selectize" id="asic_select">
