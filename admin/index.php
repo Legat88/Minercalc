@@ -629,7 +629,7 @@ require_once('pass.php');
                                         <input type="checkbox" class="form-control custom-control-input"
                                                id="rpcCheckEdit"
                                                name="rpc">
-                                        <label class="custom-control-label" for="rpcCheck">RPC</label>
+                                        <label class="custom-control-label" for="rpcCheckEdit">RPC</label>
                                     </h6>
                                 </div>
                             </div>

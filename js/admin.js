@@ -244,24 +244,6 @@ $(document).ready(function () {
             $('select#measure').val(measure);
         });
     });
-    // $(function RpcToggleEdit(api, rpc) {
-    //     api.show();
-    //     rpc.hide();
-    //     var rpcEdit=$("input#rpcCheckEdit").is(':checked');
-    //     console.log(rpcEdit);
-    //     if (rpcEdit === true) {
-    //         api.hide();
-    //         rpc.show();
-    //     } else {
-    //         api.show();
-    //         rpc.hide();
-    //     }
-    // $("input#rpcCheckEdit").click(function () {
-    //     var rpcEdit = $(this).is(':checked');
-    //     console.log(rpc);
-    //
-    // });
-    // });
 
     $('select#coin_name_edit').change(function () {
 
@@ -282,9 +264,10 @@ $(document).ready(function () {
             var blockreward=data.block_reward;
             $('input#blockreward').val(blockreward);
             var rpc_mode = data.rpc;
-            console.log(rpc_mode);
             if (rpc_mode === 0) {
                 $('input#rpcCheckEdit').prop('checked', false);
+                $('div#apiEdit').show();
+                $('div#rpcEdit').hide();
                 var url = data.url;
                 $('input#url').val(url);
                 var parameter = data.parameter;
@@ -292,6 +275,8 @@ $(document).ready(function () {
                 var addition = data.addition;
                 $('input#addition').val(addition);
             } else {
+                $('div#apiEdit').hide();
+                $('div#rpcEdit').show();
                 $('input#rpcCheckEdit').prop('checked', true);
                 var rpcuser = data.rpcuser;
                 $('input#rpcuserEdit').val(rpcuser);
@@ -346,7 +331,6 @@ $(document).ready(function () {
                 coin_name: coinName
             },
             success: function (data) {
-                console.log(data);
                 var address=data.address;
                 $('input#pool_address_edit').val(address);
                 var port=data.port;
@@ -359,7 +343,6 @@ $(document).ready(function () {
         $('div#rpc').hide();
         $("input#rpcCheck").click(function () {
             var rpc = $(this).is(':checked');
-            console.log(rpc);
             if (rpc === true) {
                 $('div#api').hide();
                 $('div#rpc').show();
@@ -369,7 +352,7 @@ $(document).ready(function () {
             }
         });
     });
-    (function RpcToggleEdit() {
+    $(function RpcToggleEdit() {
         $('div#apiEdit').show();
         $('div#rpcEdit').hide();
         $("input#rpcCheckEdit").click(function () {
@@ -380,9 +363,9 @@ $(document).ready(function () {
             } else {
                 $('div#apiEdit').show();
                 $('div#rpcEdit').hide();
-                $('input#rpcCheckEdit').prop('checked', false);
+
             }
         });
-    })();
+    });
 
 });
