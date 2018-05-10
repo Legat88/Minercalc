@@ -20,6 +20,19 @@ while ($info_pool=$stmt->fetch(PDO::FETCH_LAZY)) {
     $address[]=$info_pool['address'];
     $port[]=$info_pool['port'];
 }
-$result=array('coin'=>$name, 'algo'=>$algo, 'url'=>$coinmarketcap, 'miner'=>$miner, 'pool'=>$pool, 'address'=>$address, 'port'=>$port);
+$stmt = $dbh->query("SELECT datetime, $code FROM difficulty WHERE datetime > DATE_SUB(NOW(), INTERVAL 1 DAY)");
+//$stmt->execute(array($code));
+while ($diff_info = $stmt->fetch(PDO::FETCH_LAZY)) {
+    if ($code != 'LUX') {
+        $date[] = $diff_info['datetime'];
+        $diff[] = $diff_info[$code];
+    } else {
+        if ($diff_info[$code] > 100) {
+            $date[] = $diff_info['datetime'];
+            $diff[] = $diff_info[$code];
+        }
+    }
+}
+$result = array('coin' => $name, 'algo' => $algo, 'url' => $coinmarketcap, 'miner' => $miner, 'pool' => $pool, 'address' => $address, 'port' => $port, 'date' => $date, 'diff' => $diff);
 header('Content-type: application/json');
 echo json_encode($result);

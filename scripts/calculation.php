@@ -57,15 +57,15 @@ foreach ($new_array as $key=>$value) {
                         }
                         if ($coin_code == 'LUX') {
                             if ($interval_diff == 'current') {
-                                $net_info = $dbh->query("SELECT $coin_code as difficulty FROM difficulty WHERE $coin_code > 10 ORDER BY id DESC LIMIT 1");
+                                $net_info = $dbh->query("SELECT $coin_code as difficulty FROM difficulty WHERE $coin_code > 100 ORDER BY id DESC LIMIT 1");
                             } elseif ($interval_diff == '24h') {
-                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 10 AND datetime > DATE_SUB(NOW(), INTERVAL 1 DAY)");
+                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 100 AND datetime > DATE_SUB(NOW(), INTERVAL 1 DAY)");
                             } elseif ($interval_diff == 'week') {
-                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 10 AND datetime > DATE_SUB(NOW(), INTERVAL 7 DAY)");
+                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 100 AND datetime > DATE_SUB(NOW(), INTERVAL 7 DAY)");
                             } elseif ($interval_diff == 'month') {
-                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 10 AND datetime > DATE_SUB(NOW(), INTERVAL 30 DAY)");
+                                $net_info = $dbh->query("SELECT AVG($coin_code) as difficulty FROM difficulty WHERE $coin_code > 100 AND datetime > DATE_SUB(NOW(), INTERVAL 30 DAY)");
                             } else {
-                                $net_info = $dbh->query("SELECT $coin_code as difficulty FROM difficulty WHERE $coin_code > 10 ORDER BY id DESC LIMIT 1");
+                                $net_info = $dbh->query("SELECT $coin_code as difficulty FROM difficulty WHERE $coin_code > 100 ORDER BY id DESC LIMIT 1");
                             }
                         } else {
                             if ($interval_diff == 'current') {
@@ -143,6 +143,7 @@ foreach ($new_array as $key=>$value) {
             </table>
             <script type="text/javascript">
                 $(document).ready(function () {
+
                     $('div.info').hide();
                     $('html, body').animate({
                         scrollTop: $('#coinsInfo').offset().top
@@ -153,58 +154,116 @@ foreach ($new_array as $key=>$value) {
                         $('html, body').animate({
                             scrollTop: $('#coinInfo').offset().top
                         }, 1000);
-                        var coin=$(this).attr('id');
+                        var coin = $(this).attr('id');
                         $.ajax({
                             url: '../scripts/coin_info.php',
                             type: 'POST',
-                            dataType : "json",
+                            dataType: "json",
                             data: {coin_code: coin},
-                            success: function (data) {
-                                var coin=data['coin'],
-                                    algo=data['algo'],
-                                    url=data['url'],
-                                    pools=data['pool'][0],
-                                    miner=data['miner'],
-                                    pool_url=data['address'][0],
-                                    port=data['port'][0];
-                                var bat='';
+                            success: function (result) {
+                                var coin = result['coin'],
+                                    algo = result['algo'],
+                                    url = result['url'],
+                                    pools = result['pool'][0],
+                                    miner = result['miner'],
+                                    pool_url = result['address'][0],
+                                    port = result['port'][0];
+                                var bat = '';
                                 if (miner.match(/ccminer/i)) {
-                                    bat='ccminer.exe -a '+algo.toLowerCase()+' -o stratum+tcp://'+pool_url+':'+port+' -u &ltusername>.&ltworker> -p &ltpassword>'
+                                    bat = 'ccminer.exe -a ' + algo.toLowerCase() + ' -o stratum+tcp://' + pool_url + ':' + port + ' -u &ltusername>.&ltworker> -p &ltpassword>'
                                 } else if (miner.match(/dstm/i)) {
-                                    bat='zm --server '+pool_url+' --port '+port+' --user &ltusername>'
+                                    bat = 'zm --server ' + pool_url + ' --port ' + port + ' --user &ltusername>'
                                 } else if (miner.match(/claymore/i)) {
-                                    bat='EthDcrMiner64.exe -epool '+pool_url+':'+port+' -ewal &ltwallet>/&ltworker> -epsw &ltpassword>'
+                                    bat = 'EthDcrMiner64.exe -epool ' + pool_url + ':' + port + ' -ewal &ltwallet>/&ltworker> -epsw &ltpassword>'
                                 }
-                                $('div.info').append('<p class="text-center info">'+
-                                    'You choose <span class="blueSelect" id="selectedCoin">'+coin+'</span>! <br>'+
-                                    '<a class="blueSelect" href="'+url+'">Coinmarketcap</a><br>' +
-                                    '<b>Algo:</b><br>\n' +
-                                    algo+'<br>\n' +
-                                    '<b>Pools:</b><br>\n' +
-                                    pools+'<br>\n' +
-                                    '<b>Miner</b><br>\n' +
-                                    miner+'<br>\n' +
-                                    '<b>Miner cmd:</b><br>\n' +
-                                    bat +
-                                    '</p>'
-                                );
 
+
+                                $('#diffChart').remove();
+                                $('div.info').append('<p class="text-center info">' +
+                                    'You choose <span class="blueSelect" id="selectedCoin">' + coin + '</span>! <br>' +
+                                    '<a class="blueSelect" href="' + url + '">Coinmarketcap</a><br>' +
+                                    '<b>Algo:</b><br>\n' +
+                                    algo + '<br>\n' +
+                                    '<b>Pools:</b><br>\n' +
+                                    pools + '<br>\n' +
+                                    '<b>Miner</b><br>\n' +
+                                    miner + '<br>\n' +
+                                    '<b>Miner cmd:</b><br>\n' +
+                                    bat + '<br>\n' +
+                                    '<b>Difficulty:</b><br>\n' +
+                                    '</p>' +
+                                    '<canvas id="diffChart" width="600" height="400"></canvas>'
+                                );
+                                var chart = null;
+
+                                function createChart() {
+                                    var ctx = $("#diffChart");
+                                    var diffData = {
+                                        labels: result['date'],
+                                        datasets: [{
+                                            label: 'Difficulty',
+                                            data: result['diff'],
+                                            borderColor: 'rgba(41, 182, 246, 1)',
+                                            backgroundColor: 'rgba(41, 182, 246, 0.2)',
+                                            pointRadius: 1
+                                        }]
+                                    };
+                                    var diffOptions = {
+                                        legend: {
+                                            display: true,
+                                            position: 'bottom',
+                                            labels: {
+                                                boxWidth: 80,
+                                                fontColor: 'black'
+                                            }
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true
+                                                }
+                                            }]
+                                        },
+                                        animation: {
+                                            duration: 1500,
+                                            easing: 'easeInOutSine'
+                                        }
+                                    };
+                                    var chart = new Chart(ctx, {
+                                        config: {
+                                            plugins: {
+                                                beforeUpdate: function (chart, options) {
+                                                    filterData(chart);
+                                                }
+                                            }
+                                        },
+                                        type: 'line',
+                                        data: diffData,
+                                        options: diffOptions
+                                    });
+
+                                }
+
+                                createChart();
                             }
                         });
+                        $('table.info')
+                            .tablesorter({
+                                theme: "bootstrap",
+                                sortList: [5, 0]
+                            })
+                            .tablesorterPager({
+                                container: $(".ts-pager"),
+                                cssGoto: ".pagenum",
+                                removeRows: false,
+                                output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                            });
+
                     });
-                    $('table.info')
-                        .tablesorter({
-                            theme: "bootstrap",
-                            sortList: [5, 0]
-                        })
-                        .tablesorterPager({
-                            container: $(".ts-pager"),
-                            cssGoto: ".pagenum",
-                            removeRows: false,
-                            output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
-                        });
                 });
             </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+            <!--            <script src="https://code.highcharts.com/highcharts.js"></script>-->
 
             <!--            <nav aria-label="Page navigation example">-->
             <!--                <ul class="pagination justify-content-center">-->
