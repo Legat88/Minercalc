@@ -154,20 +154,36 @@ foreach ($new_array as $key=>$value) {
                         $('html, body').animate({
                             scrollTop: $('#coinInfo').offset().top
                         }, 1000);
-                        var coin = $(this).attr('id');
-                        $.ajax({
-                            url: '../scripts/coin_info.php',
-                            type: 'POST',
-                            dataType: "json",
-                            data: {coin_code: coin},
-                            success: function (result) {
-                                var coin = result['coin'],
-                                    algo = result['algo'],
-                                    url = result['url'],
-                                    pools = result['pool'][0],
-                                    miner = result['miner'],
-                                    pool_url = result['address'][0],
-                                    port = result['port'][0];
+                        var code = $(this).attr('id');
+                        $.getJSON('../json/results.json')
+                            .done(function (data) {
+                                function isNumber(n) {
+                                    return !isNaN(parseFloat(n)) && isFinite(n);
+                                }
+
+                                var coin = data[code].coin,
+                                    algo = data[code].algo,
+                                    url = data[code].url,
+                                    pools = data[code].pool,
+                                    miner = data[code].miner,
+                                    pool_url = data[code].address,
+                                    port = data[code].port,
+                                    json_arr = data[code].data;
+                                console.log(json_arr);
+//                                    arr = $.map(json_arr, function(el) { return el; }),
+//                                    new_arr =[];
+//                                for( var i in json_arr ) {
+//                                    if (json_arr.hasOwnProperty(i)){
+//                                        if (isNumber(i)){
+//                                            new_arr[i] = json_arr[i];
+//                                        }else{
+//                                            new_arr.push(json_arr[i]);
+//                                        }
+//                                    }
+//                                }
+//                                console.log(data[code]);
+//                                console.log(arr);
+//                                console.log(new_arr);
                                 var bat = '';
                                 if (miner.match(/ccminer/i)) {
                                     bat = 'ccminer.exe -a ' + algo.toLowerCase() + ' -o stratum+tcp://' + pool_url + ':' + port + ' -u &ltusername>.&ltworker> -p &ltpassword>'
@@ -176,9 +192,7 @@ foreach ($new_array as $key=>$value) {
                                 } else if (miner.match(/claymore/i)) {
                                     bat = 'EthDcrMiner64.exe -epool ' + pool_url + ':' + port + ' -ewal &ltwallet>/&ltworker> -epsw &ltpassword>'
                                 }
-
-
-                                $('#diffChart').remove();
+                                $('#container').remove();
                                 $('div.info').append('<p class="text-center info">' +
                                     'You choose <span class="blueSelect" id="selectedCoin">' + coin + '</span>! <br>' +
                                     '<a class="blueSelect" href="' + url + '">Coinmarketcap</a><br>' +
@@ -192,61 +206,134 @@ foreach ($new_array as $key=>$value) {
                                     bat + '<br>\n' +
                                     '<b>Difficulty:</b><br>\n' +
                                     '</p>' +
-                                    '<canvas id="diffChart" width="600" height="400"></canvas>'
+                                    '<div id="container" style="width:100%; height:400px;"></div>'
                                 );
-                                var chart = null;
+                                Highcharts.stockChart('container', {
+                                    rangeSelector: {
+                                        selected: 1
+                                    },
 
-                                function createChart() {
-                                    var ctx = $("#diffChart");
-                                    var diffData = {
-                                        labels: result['date'],
-                                        datasets: [{
-                                            label: 'Difficulty',
-                                            data: result['diff'],
-                                            borderColor: 'rgba(41, 182, 246, 1)',
-                                            backgroundColor: 'rgba(41, 182, 246, 0.2)',
-                                            pointRadius: 1
-                                        }]
-                                    };
-                                    var diffOptions = {
-                                        legend: {
-                                            display: true,
-                                            position: 'bottom',
-                                            labels: {
-                                                boxWidth: 80,
-                                                fontColor: 'black'
-                                            }
+                                    title: {
+                                        text: 'Difficulty'
+                                    },
+
+                                    series: [{
+                                        name: 'Difficulty',
+                                        data: json_arr,
+                                        type: 'areaspline',
+                                        threshold: null,
+                                        tooltip: {
+                                            valueDecimals: 2
                                         },
-                                        scales: {
-                                            yAxes: [{
-                                                ticks: {
-                                                    beginAtZero: true
-                                                }
-                                            }]
-                                        },
-                                        animation: {
-                                            duration: 1500,
-                                            easing: 'easeInOutSine'
+                                        fillColor: {
+                                            linearGradient: {
+                                                x1: 0,
+                                                y1: 0,
+                                                x2: 0,
+                                                y2: 1
+                                            },
+                                            stops: [
+                                                [0, Highcharts.getOptions().colors[0]],
+                                                [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                                            ]
                                         }
-                                    };
-                                    var chart = new Chart(ctx, {
-                                        config: {
-                                            plugins: {
-                                                beforeUpdate: function (chart, options) {
-                                                    filterData(chart);
-                                                }
-                                            }
-                                        },
-                                        type: 'line',
-                                        data: diffData,
-                                        options: diffOptions
-                                    });
+                                    }]
+                                });
+                            })
+                        ;
 
-                                }
-
-                                createChart();
-                            }
-                        });
+//                        $.ajax({
+//                            url: '../scripts/coin_info.php',
+//                            type: 'POST',
+//                            dataType: "json",
+//                            data: {coin_code: coin},
+//                            success: function (result) {
+//                                var coin = result['coin'],
+//                                    algo = result['algo'],
+//                                    url = result['url'],
+//                                    pools = result['pool'][0],
+//                                    miner = result['miner'],
+//                                    pool_url = result['address'][0],
+//                                    port = result['port'][0];
+//                                var bat = '';
+//                                if (miner.match(/ccminer/i)) {
+//                                    bat = 'ccminer.exe -a ' + algo.toLowerCase() + ' -o stratum+tcp://' + pool_url + ':' + port + ' -u &ltusername>.&ltworker> -p &ltpassword>'
+//                                } else if (miner.match(/dstm/i)) {
+//                                    bat = 'zm --server ' + pool_url + ' --port ' + port + ' --user &ltusername>'
+//                                } else if (miner.match(/claymore/i)) {
+//                                    bat = 'EthDcrMiner64.exe -epool ' + pool_url + ':' + port + ' -ewal &ltwallet>/&ltworker> -epsw &ltpassword>'
+//                                }
+//
+//
+//                                $('#diffChart').remove();
+//                                $('div.info').append('<p class="text-center info">' +
+//                                    'You choose <span class="blueSelect" id="selectedCoin">' + coin + '</span>! <br>' +
+//                                    '<a class="blueSelect" href="' + url + '">Coinmarketcap</a><br>' +
+//                                    '<b>Algo:</b><br>\n' +
+//                                    algo + '<br>\n' +
+//                                    '<b>Pools:</b><br>\n' +
+//                                    pools + '<br>\n' +
+//                                    '<b>Miner</b><br>\n' +
+//                                    miner + '<br>\n' +
+//                                    '<b>Miner cmd:</b><br>\n' +
+//                                    bat + '<br>\n' +
+//                                    '<b>Difficulty:</b><br>\n' +
+//                                    '</p>' +
+//                                    '<canvas id="diffChart" width="600" height="400"></canvas>'
+//                                );
+//                                var chart = null;
+//
+//                                function createChart() {
+//                                    var ctx = $("#diffChart");
+//                                    var diffData = {
+//                                        labels: result['date'],
+//                                        datasets: [{
+//                                            label: 'Difficulty',
+//                                            data: result['diff'],
+//                                            borderColor: 'rgba(41, 182, 246, 1)',
+//                                            backgroundColor: 'rgba(41, 182, 246, 0.2)',
+//                                            pointRadius: 1
+//                                        }]
+//                                    };
+//                                    var diffOptions = {
+//                                        legend: {
+//                                            display: true,
+//                                            position: 'bottom',
+//                                            labels: {
+//                                                boxWidth: 80,
+//                                                fontColor: 'black'
+//                                            }
+//                                        },
+//                                        scales: {
+//                                            yAxes: [{
+//                                                ticks: {
+//                                                    beginAtZero: true
+//                                                }
+//                                            }]
+//                                        },
+//                                        animation: {
+//                                            duration: 1500,
+//                                            easing: 'easeInOutSine'
+//                                        }
+//                                    };
+//                                    var chart = new Chart(ctx, {
+//                                        config: {
+//                                            plugins: {
+//                                                beforeUpdate: function (chart, options) {
+//                                                    filterData(chart);
+//                                                }
+//                                            }
+//                                        },
+//                                        type: 'line',
+//                                        data: diffData,
+//                                        options: diffOptions
+//                                    });
+//
+//                                }
+//
+//                                createChart();
+//                            }
+//                        });
                         $('table.info')
                             .tablesorter({
                                 theme: "bootstrap",
@@ -263,6 +350,7 @@ foreach ($new_array as $key=>$value) {
                 });
             </script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+            <script src="../js/highstock.js"></script>
             <!--            <script src="https://code.highcharts.com/highcharts.js"></script>-->
 
             <!--            <nav aria-label="Page navigation example">-->
