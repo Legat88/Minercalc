@@ -39,9 +39,9 @@ require_once('pass.php');
     </div>
 </div>
 <div class="container-fluid" id="content">
-    <? $nexus= new Bitcoin('nexusrpc', $password, 'localhost', '9336');
-    $nexus->getdifficulty();
-    var_dump($nexus);
+    <? $monero = new Bitcoin('monerorpc', $password, 'localhost', '18081');
+    $monero->getinfo();
+    var_dump($monero);
     $lux = new Bitcoin('luxcoinrpc', $password, 'localhost', '9888');
     $lux->getinfo();
     var_dump($lux);

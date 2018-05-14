@@ -145,22 +145,40 @@ foreach ($new_array as $key=>$value) {
                 $(document).ready(function () {
 
                     $('div.info').hide();
+                    $('table.info')
+                        .tablesorter({
+                            theme: "bootstrap",
+                            sortList: [5, 0]
+                        })
+                        .tablesorterPager({
+                            container: $(".ts-pager"),
+                            cssGoto: ".pagenum",
+                            removeRows: false,
+                            output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                        });
                     $('html, body').animate({
                         scrollTop: $('#coinsInfo').offset().top
                     }, 1000);
+
                     $('tr.coin_row').on("click", function () {
                         $('p.info').remove();
                         $('div.info').show();
+//                        var request = require('request')
+//                            , JSONStream = require('JSONStream')
+//                            , es = require('event-stream');
+//
+//                        request('../json/results.json')
+//                            .pipe(JSONStream.parse('*'))
+//                            .pipe(es.mapSync(function (data) {
+//                                console.error(data);
+//                                console.log(data);
+//                            }));
                         $('html, body').animate({
                             scrollTop: $('#coinInfo').offset().top
                         }, 1000);
                         var code = $(this).attr('id');
                         $.getJSON('../json/results.json')
                             .done(function (data) {
-                                function isNumber(n) {
-                                    return !isNaN(parseFloat(n)) && isFinite(n);
-                                }
-
                                 var coin = data[code].coin,
                                     algo = data[code].algo,
                                     url = data[code].url,
@@ -169,21 +187,6 @@ foreach ($new_array as $key=>$value) {
                                     pool_url = data[code].address,
                                     port = data[code].port,
                                     json_arr = data[code].data;
-                                console.log(json_arr);
-//                                    arr = $.map(json_arr, function(el) { return el; }),
-//                                    new_arr =[];
-//                                for( var i in json_arr ) {
-//                                    if (json_arr.hasOwnProperty(i)){
-//                                        if (isNumber(i)){
-//                                            new_arr[i] = json_arr[i];
-//                                        }else{
-//                                            new_arr.push(json_arr[i]);
-//                                        }
-//                                    }
-//                                }
-//                                console.log(data[code]);
-//                                console.log(arr);
-//                                console.log(new_arr);
                                 var bat = '';
                                 if (miner.match(/ccminer/i)) {
                                     bat = 'ccminer.exe -a ' + algo.toLowerCase() + ' -o stratum+tcp://' + pool_url + ':' + port + ' -u &ltusername>.&ltworker> -p &ltpassword>'
@@ -206,11 +209,30 @@ foreach ($new_array as $key=>$value) {
                                     bat + '<br>\n' +
                                     '<b>Difficulty:</b><br>\n' +
                                     '</p>' +
-                                    '<div id="container" style="width:100%; height:400px;"></div>'
+                                    '<div id="container" style="height:400px;"></div>'
                                 );
+                                Highcharts.setOptions({
+                                    time: {
+                                        timezoneOffset: -5 * 60
+                                    }
+                                });
                                 Highcharts.stockChart('container', {
                                     rangeSelector: {
-                                        selected: 1
+                                        allButtonsEnabled: true,
+                                        buttons: [{
+                                            type: 'day',
+                                            count: 1,
+                                            text: 'Day'
+                                        }, {
+                                            type: 'week',
+                                            count: 1,
+                                            text: 'Week'
+                                        }, {
+                                            type: 'month',
+                                            count: 1,
+                                            text: 'Month'
+                                        }],
+                                        selected: 2
                                     },
 
                                     title: {
@@ -242,6 +264,8 @@ foreach ($new_array as $key=>$value) {
                             })
                         ;
 
+
+//                        - - - - -
 //                        $.ajax({
 //                            url: '../scripts/coin_info.php',
 //                            type: 'POST',
@@ -334,18 +358,6 @@ foreach ($new_array as $key=>$value) {
 //                                createChart();
 //                            }
 //                        });
-                        $('table.info')
-                            .tablesorter({
-                                theme: "bootstrap",
-                                sortList: [5, 0]
-                            })
-                            .tablesorterPager({
-                                container: $(".ts-pager"),
-                                cssGoto: ".pagenum",
-                                removeRows: false,
-                                output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
-                            });
-
                     });
                 });
             </script>
@@ -373,7 +385,10 @@ foreach ($new_array as $key=>$value) {
             <!--                </ul>-->
             <!--            </nav>-->
         </div>
-        <div class="col-md-8 info" id="coinInfo">
+
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-9 col-xl-6 info" id="coinInfo">
         </div>
 
     </div>
