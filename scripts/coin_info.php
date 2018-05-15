@@ -53,15 +53,15 @@ foreach ($coin_code as $c) {
 //$coin_code=$_POST['coin_code'];
 
 
-if ($result && file_exists('../json/result.json')) {
-    unlink('../json/result.json'); //delete file
-    $fp = fopen('../json/results.json', 'w');
+if ($result && file_exists(__DIR__ . '/../json/results.json')) {
+    unlink(__DIR__ . '/../json/results.json'); //delete file
+    $fp = fopen(__DIR__ . '/../json/results.json', 'w');
     fwrite($fp, json_encode($result));
     fclose($fp);
 //    createFile($result);
-} elseif ($result && !file_exists('../json/result.json')) {
+} elseif ($result && !file_exists(__DIR__ . '/../json/results.json')) {
 //    createFile($result);
-    $fp = fopen('../json/results.json', 'w');
+    $fp = fopen(__DIR__ . '/../json/results.json', 'w');
     fwrite($fp, json_encode($result));
     fclose($fp);
 }
