@@ -163,31 +163,25 @@ foreach ($new_array as $key=>$value) {
                     $('tr.coin_row').on("click", function () {
                         $('p.info').remove();
                         $('div.info').show();
-//                        var request = require('request')
-//                            , JSONStream = require('JSONStream')
-//                            , es = require('event-stream');
-//
-//                        request('../json/results.json')
-//                            .pipe(JSONStream.parse('*'))
-//                            .pipe(es.mapSync(function (data) {
-//                                console.error(data);
-//                                console.log(data);
-//                            }));
                         $('html, body').animate({
                             scrollTop: $('#coinInfo').offset().top
                         }, 1000);
                         var code = $(this).attr('id');
-                        $.getJSON('../json/results.json')
-                            .done(function (data) {
-                                var coin = data[code].coin,
-                                    algo = data[code].algo,
-                                    url = data[code].url,
-                                    pools = data[code].pool,
-                                    miner = data[code].miner,
-                                    pool_url = data[code].address,
-                                    port = data[code].port,
-                                    json_arr = data[code].data;
-                                var bat = '';
+                        $.ajax({
+                            url: '../scripts/coin_info.php',
+                            type: 'POST',
+                            dataType: "json",
+                            data: {coin_code: code},
+                            success: function (result) {
+                                console.log(result);
+                                var coin = result['coin'],
+                                    algo = result['algo'],
+                                    url = result['url'],
+                                    pools = result['pool'][0],
+                                    miner = result['miner'],
+                                    pool_url = result['address'][0],
+                                    port = result['port'][0],
+                                    bat = '';
                                 if (miner.match(/ccminer/i)) {
                                     bat = 'ccminer.exe -a ' + algo.toLowerCase() + ' -o stratum+tcp://' + pool_url + ':' + port + ' -u &ltusername>.&ltworker> -p &ltpassword>'
                                 } else if (miner.match(/dstm/i)) {
@@ -195,7 +189,8 @@ foreach ($new_array as $key=>$value) {
                                 } else if (miner.match(/claymore/i)) {
                                     bat = 'EthDcrMiner64.exe -epool ' + pool_url + ':' + port + ' -ewal &ltwallet>/&ltworker> -epsw &ltpassword>'
                                 }
-                                $('#container').remove();
+
+                                $('div#container').remove();
                                 $('div.info').append('<p class="text-center info">' +
                                     'You choose <span class="blueSelect" id="selectedCoin">' + coin + '</span>! <br>' +
                                     '<a class="blueSelect" href="' + url + '">Coinmarketcap</a><br>' +
@@ -211,155 +206,94 @@ foreach ($new_array as $key=>$value) {
                                     '</p>' +
                                     '<div id="container" style="height:400px;"></div>'
                                 );
-                                Highcharts.setOptions({
-                                    time: {
-                                        timezoneOffset: -5 * 60
+                                $.ajax({
+                                    url: '../scripts/data_graph.php',
+                                    type: 'POST',
+                                    dataType: 'text',
+                                    data: {code: code},
+                                    success: function (data_graph) {
+                                        var graph = JSON.parse('[' + data_graph + ']');
+                                        Highcharts.setOptions({
+                                            time: {
+                                                timezoneOffset: -5 * 60
+                                            }
+                                        });
+                                        Highcharts.stockChart('container', {
+                                            rangeSelector: {
+                                                allButtonsEnabled: true,
+                                                buttons: [{
+                                                    type: 'day',
+                                                    count: 1,
+                                                    text: 'Day'
+                                                }, {
+                                                    type: 'week',
+                                                    count: 1,
+                                                    text: 'Week'
+                                                }, {
+                                                    type: 'month',
+                                                    count: 1,
+                                                    text: 'Month'
+                                                }],
+                                                selected: 2
+                                            },
+
+                                            title: {
+                                                text: 'Difficulty'
+                                            },
+
+                                            series: [{
+                                                name: 'Difficulty',
+                                                data: graph,
+                                                type: 'areaspline',
+                                                threshold: null,
+                                                tooltip: {
+                                                    valueDecimals: 2
+                                                },
+                                                fillColor: {
+                                                    linearGradient: {
+                                                        x1: 0,
+                                                        y1: 0,
+                                                        x2: 0,
+                                                        y2: 1
+                                                    },
+                                                    stops: [
+                                                        [0, Highcharts.getOptions().colors[0]],
+                                                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                                                    ]
+                                                }
+                                            }]
+                                        });
                                     }
                                 });
-                                Highcharts.stockChart('container', {
-                                    rangeSelector: {
-                                        allButtonsEnabled: true,
-                                        buttons: [{
-                                            type: 'day',
-                                            count: 1,
-                                            text: 'Day'
-                                        }, {
-                                            type: 'week',
-                                            count: 1,
-                                            text: 'Week'
-                                        }, {
-                                            type: 'month',
-                                            count: 1,
-                                            text: 'Month'
-                                        }],
-                                        selected: 2
-                                    },
+//                                var href="scripts/calculation.php?coin=" + code;
+//                                console.log(href);
+//                                document.location.href="?coin=ZEC";
+                                <?
+                                //                                                    if (isset($_GET['coin'])) {
+                                //                                                        $code = $_GET['coin'];
+                                //                                                        echo '<p>'.$code.'</p>';
+                                //                                $code = 'ZEC';
 
-                                    title: {
-                                        text: 'Difficulty'
-                                    },
+                                //                                                    } else {
+                                ////                                                                        echo '<script type="text/javascript">';
+                                //                                                        echo 'document.location.href="' . $_SERVER['REQUEST_URI'] . '?coin=" + code';
+                                ////                                                                        echo '</script>';
+                                //                                                        exit();
+                                //                                                    }
 
-                                    series: [{
-                                        name: 'Difficulty',
-                                        data: json_arr,
-                                        type: 'areaspline',
-                                        threshold: null,
-                                        tooltip: {
-                                            valueDecimals: 2
-                                        },
-                                        fillColor: {
-                                            linearGradient: {
-                                                x1: 0,
-                                                y1: 0,
-                                                x2: 0,
-                                                y2: 1
-                                            },
-                                            stops: [
-                                                [0, Highcharts.getOptions().colors[0]],
-                                                [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                                            ]
-                                        }
-                                    }]
-                                });
-                            })
-                        ;
+                                ?>
 
 
-//                        - - - - -
-//                        $.ajax({
-//                            url: '../scripts/coin_info.php',
-//                            type: 'POST',
-//                            dataType: "json",
-//                            data: {coin_code: coin},
-//                            success: function (result) {
-//                                var coin = result['coin'],
-//                                    algo = result['algo'],
-//                                    url = result['url'],
-//                                    pools = result['pool'][0],
-//                                    miner = result['miner'],
-//                                    pool_url = result['address'][0],
-//                                    port = result['port'][0];
-//                                var bat = '';
-//                                if (miner.match(/ccminer/i)) {
-//                                    bat = 'ccminer.exe -a ' + algo.toLowerCase() + ' -o stratum+tcp://' + pool_url + ':' + port + ' -u &ltusername>.&ltworker> -p &ltpassword>'
-//                                } else if (miner.match(/dstm/i)) {
-//                                    bat = 'zm --server ' + pool_url + ' --port ' + port + ' --user &ltusername>'
-//                                } else if (miner.match(/claymore/i)) {
-//                                    bat = 'EthDcrMiner64.exe -epool ' + pool_url + ':' + port + ' -ewal &ltwallet>/&ltworker> -epsw &ltpassword>'
-//                                }
-//
-//
-//                                $('#diffChart').remove();
-//                                $('div.info').append('<p class="text-center info">' +
-//                                    'You choose <span class="blueSelect" id="selectedCoin">' + coin + '</span>! <br>' +
-//                                    '<a class="blueSelect" href="' + url + '">Coinmarketcap</a><br>' +
-//                                    '<b>Algo:</b><br>\n' +
-//                                    algo + '<br>\n' +
-//                                    '<b>Pools:</b><br>\n' +
-//                                    pools + '<br>\n' +
-//                                    '<b>Miner</b><br>\n' +
-//                                    miner + '<br>\n' +
-//                                    '<b>Miner cmd:</b><br>\n' +
-//                                    bat + '<br>\n' +
-//                                    '<b>Difficulty:</b><br>\n' +
-//                                    '</p>' +
-//                                    '<canvas id="diffChart" width="600" height="400"></canvas>'
-//                                );
-//                                var chart = null;
-//
-//                                function createChart() {
-//                                    var ctx = $("#diffChart");
-//                                    var diffData = {
-//                                        labels: result['date'],
-//                                        datasets: [{
-//                                            label: 'Difficulty',
-//                                            data: result['diff'],
-//                                            borderColor: 'rgba(41, 182, 246, 1)',
-//                                            backgroundColor: 'rgba(41, 182, 246, 0.2)',
-//                                            pointRadius: 1
-//                                        }]
-//                                    };
-//                                    var diffOptions = {
-//                                        legend: {
-//                                            display: true,
-//                                            position: 'bottom',
-//                                            labels: {
-//                                                boxWidth: 80,
-//                                                fontColor: 'black'
-//                                            }
-//                                        },
-//                                        scales: {
-//                                            yAxes: [{
-//                                                ticks: {
-//                                                    beginAtZero: true
-//                                                }
-//                                            }]
-//                                        },
-//                                        animation: {
-//                                            duration: 1500,
-//                                            easing: 'easeInOutSine'
-//                                        }
-//                                    };
-//                                    var chart = new Chart(ctx, {
-//                                        config: {
-//                                            plugins: {
-//                                                beforeUpdate: function (chart, options) {
-//                                                    filterData(chart);
-//                                                }
-//                                            }
-//                                        },
-//                                        type: 'line',
-//                                        data: diffData,
-//                                        options: diffOptions
-//                                    });
-//
-//                                }
-//
-//                                createChart();
-//                            }
-//                        });
+
+
+                            }
+                        });
+
                     });
+
+
                 });
+                //                });
             </script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
             <script src="../js/highstock.js"></script>

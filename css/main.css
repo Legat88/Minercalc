@@ -100,5 +100,9 @@ thead > tr > th {
     background-color: rgba(41, 182, 246, 0.15) !important;
 }
 
+input {
+    min-width: 70px !important;
+}
+
   
  
