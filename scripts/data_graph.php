@@ -21,12 +21,66 @@ while ($diff_info = $stmt->fetch(PDO::FETCH_LAZY)) {
         }
     }
 }
+$graph_data = '';
 for ($i = 0; $i < count($data); $i++) {
     $key = $data[$i][0];
     $value = $data[$i][1];
     if ($i != count($data) - 1) {
-        echo '[' . $key . ', ' . $value . '], ';
+        $graph_data .= '[' . $key . ', ' . $value . '], ';
     } else {
-        echo '[' . $key . ', ' . $value . ']';
+        $graph_data .= '[' . $key . ', ' . $value . ']';
     }
 }
+echo '<script type="text/javascript">
+        Highcharts.setOptions({
+            time: {
+                timezoneOffset: -5 * 60
+            }
+        });
+        Highcharts.stockChart(\'container\', {
+            rangeSelector: {
+                allButtonsEnabled: true,
+                buttons: [{
+                    type: \'day\',
+                    count: 1,
+                    text: \'Day\'
+                }, {
+                    type: \'week\',
+                    count: 1,
+                    text: \'Week\'
+                }, {
+                    type: \'month\',
+                    count: 1,
+                    text: \'Month\'
+                }],
+                selected: 2
+            },
+
+            title: {
+                text: \'Difficulty\'
+            },
+
+            series: [{
+                name: \'Difficulty\',
+                data: [' . $graph_data . '],
+                type: \'areaspline\',
+                threshold: null,
+                tooltip: {
+                    valueDecimals: 2
+                },
+                fillColor: {
+                    linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
+                    },
+                    stops: [
+                        [0, Highcharts.getOptions().colors[0]],
+                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get(\'rgba\')]
+                    ]
+                }
+            }]
+        });
+        </script>
+';

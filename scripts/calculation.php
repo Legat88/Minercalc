@@ -171,129 +171,58 @@ foreach ($new_array as $key=>$value) {
                             url: '../scripts/coin_info.php',
                             type: 'POST',
                             dataType: "json",
-                            data: {coin_code: code},
-                            success: function (result) {
-                                console.log(result);
-                                var coin = result['coin'],
-                                    algo = result['algo'],
-                                    url = result['url'],
-                                    pools = result['pool'][0],
-                                    miner = result['miner'],
-                                    pool_url = result['address'][0],
-                                    port = result['port'][0],
-                                    bat = '';
-                                if (miner.match(/ccminer/i)) {
-                                    bat = 'ccminer.exe -a ' + algo.toLowerCase() + ' -o stratum+tcp://' + pool_url + ':' + port + ' -u &ltusername>.&ltworker> -p &ltpassword>'
-                                } else if (miner.match(/dstm/i)) {
-                                    bat = 'zm --server ' + pool_url + ' --port ' + port + ' --user &ltusername>'
-                                } else if (miner.match(/claymore/i)) {
-                                    bat = 'EthDcrMiner64.exe -epool ' + pool_url + ':' + port + ' -ewal &ltwallet>/&ltworker> -epsw &ltpassword>'
-                                }
-
-                                $('div#container').remove();
-                                $('div.info').append('<p class="text-center info">' +
-                                    'You choose <span class="blueSelect" id="selectedCoin">' + coin + '</span>! <br>' +
-                                    '<a class="blueSelect" href="' + url + '">Coinmarketcap</a><br>' +
-                                    '<b>Algo:</b><br>\n' +
-                                    algo + '<br>\n' +
-                                    '<b>Pools:</b><br>\n' +
-                                    pools + '<br>\n' +
-                                    '<b>Miner</b><br>\n' +
-                                    miner + '<br>\n' +
-                                    '<b>Miner cmd:</b><br>\n' +
-                                    bat + '<br>\n' +
-                                    '<b>Difficulty:</b><br>\n' +
-                                    '</p>' +
-                                    '<div id="container" style="height:400px;"></div>'
-                                );
-                                $.ajax({
-                                    url: '../scripts/data_graph.php',
-                                    type: 'POST',
-                                    dataType: 'text',
-                                    data: {code: code},
-                                    success: function (data_graph) {
-                                        var graph = JSON.parse('[' + data_graph + ']');
-                                        Highcharts.setOptions({
-                                            time: {
-                                                timezoneOffset: -5 * 60
-                                            }
-                                        });
-                                        Highcharts.stockChart('container', {
-                                            rangeSelector: {
-                                                allButtonsEnabled: true,
-                                                buttons: [{
-                                                    type: 'day',
-                                                    count: 1,
-                                                    text: 'Day'
-                                                }, {
-                                                    type: 'week',
-                                                    count: 1,
-                                                    text: 'Week'
-                                                }, {
-                                                    type: 'month',
-                                                    count: 1,
-                                                    text: 'Month'
-                                                }],
-                                                selected: 2
-                                            },
-
-                                            title: {
-                                                text: 'Difficulty'
-                                            },
-
-                                            series: [{
-                                                name: 'Difficulty',
-                                                data: graph,
-                                                type: 'areaspline',
-                                                threshold: null,
-                                                tooltip: {
-                                                    valueDecimals: 2
-                                                },
-                                                fillColor: {
-                                                    linearGradient: {
-                                                        x1: 0,
-                                                        y1: 0,
-                                                        x2: 0,
-                                                        y2: 1
-                                                    },
-                                                    stops: [
-                                                        [0, Highcharts.getOptions().colors[0]],
-                                                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                                                    ]
-                                                }
-                                            }]
-                                        });
-                                    }
-                                });
-//                                var href="scripts/calculation.php?coin=" + code;
-//                                console.log(href);
-//                                document.location.href="?coin=ZEC";
-                                <?
-                                //                                                    if (isset($_GET['coin'])) {
-                                //                                                        $code = $_GET['coin'];
-                                //                                                        echo '<p>'.$code.'</p>';
-                                //                                $code = 'ZEC';
-
-                                //                                                    } else {
-                                ////                                                                        echo '<script type="text/javascript">';
-                                //                                                        echo 'document.location.href="' . $_SERVER['REQUEST_URI'] . '?coin=" + code';
-                                ////                                                                        echo '</script>';
-                                //                                                        exit();
-                                //                                                    }
-
-                                ?>
-
-
-
-
+                            data: {coin_code: code}
+                        }).done(function (result) {
+                            console.log(result);
+                            var coin = result['coin'],
+                                algo = result['algo'],
+                                url = result['url'],
+                                pools = result['pool'][0],
+                                miner = result['miner'],
+                                pool_url = result['address'][0],
+                                port = result['port'][0],
+                                bat = '';
+                            if (miner.match(/ccminer/i)) {
+                                bat = 'ccminer.exe -a ' + algo.toLowerCase() + ' -o stratum+tcp://' + pool_url + ':' + port + ' -u &ltusername>.&ltworker> -p &ltpassword>'
+                            } else if (miner.match(/dstm/i)) {
+                                bat = 'zm --server ' + pool_url + ' --port ' + port + ' --user &ltusername>'
+                            } else if (miner.match(/claymore/i)) {
+                                bat = 'EthDcrMiner64.exe -epool ' + pool_url + ':' + port + ' -ewal &ltwallet>/&ltworker> -epsw &ltpassword>'
                             }
-                        });
 
+                            $('div#container').remove();
+                            $('div.info').append('<p class="text-center info">' +
+                                'You choose <span class="blueSelect" id="selectedCoin">' + coin + '</span>! <br>' +
+                                '<a class="blueSelect" href="' + url + '">Coinmarketcap</a><br>' +
+                                '<b>Algo:</b><br>\n' +
+                                algo + '<br>\n' +
+                                '<b>Pools:</b><br>\n' +
+                                pools + '<br>\n' +
+                                '<b>Miner</b><br>\n' +
+                                miner + '<br>\n' +
+                                '<b>Miner cmd:</b><br>\n' +
+                                bat + '<br>\n' +
+                                '<b>Difficulty:</b><br>\n' +
+                                '</p>' +
+                                '<div id="container" style="height:400px;"></div>'
+                            );
+                        }).done(function () {
+                            $.ajax({
+                                url: '../scripts/data_graph.php',
+                                type: 'POST',
+                                data: {code: code}
+                            }).done(function (ppp) {
+                                $('div.info').append(ppp);
+                            });
+
+                        });
                     });
+//                                var href='scripts/calculation.php?coin='+code;
+//                                console.log(href);
+//                                document.location.href=href;
 
 
                 });
-                //                });
             </script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
             <script src="../js/highstock.js"></script>
