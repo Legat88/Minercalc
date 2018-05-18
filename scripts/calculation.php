@@ -90,7 +90,7 @@ foreach ($new_array as $key=>$value) {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty);
                             } elseif ($algo=='Equihash') {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty*8192);
-                            } elseif ($algo=='Cryptonight') {
+                            } elseif ($algo == 'Cryptonight_v7') {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty);
                             } elseif ($algo == 'SK1024') {
                                 $qty = ($my_hashrate * $block_reward * $DAY * $interval_profit) / ($difficulty * 32288028000);
@@ -188,6 +188,14 @@ foreach ($new_array as $key=>$value) {
                                 bat = 'zm --server ' + pool_url + ' --port ' + port + ' --user &ltusername>'
                             } else if (miner.match(/claymore/i)) {
                                 bat = 'EthDcrMiner64.exe -epool ' + pool_url + ':' + port + ' -ewal &ltwallet>/&ltworker> -epsw &ltpassword>'
+                            } else if (miner.match(/lolminer/i)) {
+                                bat = 'in cfg file: <br>' +
+                                    '--server ' + pool_url + '<br>' +
+                                    '--port ' + port + '<br>' +
+                                    '--user &ltwallet>.&ltworker> <br>' +
+                                    '--pass &ltpassword> '
+                            } else if (miner.match(/tdxminer/i)) {
+                                bat = './tdxminer -a lyra2z -o ' + pool_url + ':' + port + ' -u &ltusername> -p &ltpassword>'
                             }
 
                             $('div#container').remove();

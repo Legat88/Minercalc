@@ -1,7 +1,7 @@
 <?php
 require "../scripts/db.php";
-require_once('../scripts/easybitcoin.php');
-require_once('pass.php');
+//require_once('../scripts/easybitcoin.php');
+//require_once('pass.php');
 ?>
 <!doctype html>
 <html lang="ru">
@@ -39,13 +39,6 @@ require_once('pass.php');
     </div>
 </div>
 <div class="container-fluid" id="content">
-    <? $monero = new Bitcoin('monerorpc', $password, 'localhost', '18081');
-    $monero->getinfo();
-    var_dump($monero);
-    $lux = new Bitcoin('luxcoinrpc', $password, 'localhost', '9888');
-    $lux->getinfo();
-    var_dump($lux);
-    ?>
     <h2 class="text-center">Operations with DB</h2>
     <div class="row justify-content-center">
         <div class="dropdown col-auto text-center">
@@ -769,7 +762,7 @@ require_once('pass.php');
                                     <select name="pool_name" id="" class="form-control selectize-add-item" placeholder="Name of Pool">
                                         <? $pool = $dbh->query("SELECT DISTINCT name FROM pools")->fetchAll(PDO::FETCH_COLUMN);
                                         foreach ($pool as $p) {
-                                            echo '<option value="'.$c.'">' . $p . '</option>';
+                                            echo '<option value="' . $p . '">' . $p . '</option>';
                                         }
                                         ?>
                                     </select>
