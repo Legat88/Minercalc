@@ -30,7 +30,6 @@ require "../scripts/db.php";
 <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>-->
 </head>
 <body>
-
 <div class="container-fluid" >
     <div class="row align-items-center" id="header">
         <div class="col">

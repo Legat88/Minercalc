@@ -89,7 +89,8 @@ option {
     font-size: 22px;
     margin-bottom: 0;
 }
-i#spinner {
+
+i#spinner, #spinner_asic, #spinner_gpu {
     display: inline-block; /*inline не даст крутиться */
 }
 tr.coin_row {
@@ -98,5 +99,9 @@ tr.coin_row {
 
 thead > tr > th {
     background-color: rgba(41, 182, 246, 0.15) !important;
+}
+
+table {
+    overflow-y: auto;
 }
  

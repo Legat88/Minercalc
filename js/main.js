@@ -1,4 +1,5 @@
 (function () {
+    $('div.preloader').hide();
     var clicks = 0;
     var winHeight = $(window).height();
     $('div#content').css('min-height', winHeight - 320);
@@ -33,29 +34,48 @@ $(document).ready(function () {
             $("button#calc").click();
         }
     });
+
     $('i#spinner').hide();
+    $('i#spinner_gpu').hide();
+    $('i#spinner_asic').hide();
     $('div.info').hide();
+    // function Calculation() {
     $('button#calc').click(function (e) {
         e.preventDefault();
-        $('i#spinner').show();
-        var algos = $('form#hashes').serialize();
-        $.ajax({
-            url: calculation,
-            type: 'POST',
-            data: algos,
-            success: function (data) {
-                $('div#content').css('min-height', 0);
-                $('div#content').height('auto');
-                $('div#calculation').html(data);
-                $('table.info').tablesorter({
-                    theme: "bootstrap",
-                    sortList: [[5, 1]]
-                });
-                $('i#spinner').hide();
-            }
-        })
+        if ($('input#qtyVideocards').val() > 0 || $('input#qtyASICs').val() > 0) {
+            $('i#spinner').show();
+            var algos = $('form#hashes').serialize();
+            $.ajax({
+                url: calculation,
+                type: 'POST',
+                data: algos,
+                success: function (data) {
+                    $('div#content').css('min-height', 0).height('auto');
+                    $('div#calculation').html(data);
+                    $('table.info')
+                        .tablesorter({
+                            theme: "bootstrap",
+                            sortList: [[6, 1]]
+                        })
+                        .tablesorterPager({
+                            container: $(".ts-pager"),
+                            cssGoto: ".pagenum",
+                            removeRows: false,
+                            output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                        });
+                    $('i#spinner').hide();
+                }
+            })
+        } else {
+            alert('Select hardware and quantity!');
+        }
     });
+    // }
+    // Calculation();
+
+
     $('input#qtyVideocards, select#gpu_select').on("keyup change", function () {
+        $('i#spinner_gpu').show();
         $('input#qtyASICs, select#asic_select').val('');
         var qtyGpu = $('input#qtyVideocards').val();
         var gpuName = $('select#gpu_select').val();
@@ -71,9 +91,12 @@ $(document).ready(function () {
                 var newValue = data[key] * qtyGpu;
                 $('#' + key + '.hashes').val(newValue);
             });
+            $('i#spinner_gpu').hide();
+            // Calculation();
         })
     });
     $('input#qtyASICs, select#asic_select').on("keyup change", function () {
+        $('i#spinner_asic').show();
         $('input#qtyVideocards, select#gpu_select').val('');
         var qtyASIC = $('input#qtyASICs').val();
         var asicName = $('select#asic_select').val();
@@ -89,6 +112,8 @@ $(document).ready(function () {
                 var newValue = data[key] * qtyASIC;
                 $('#' + key + '.hashes').val(newValue);
             });
+            $('i#spinner_asic').hide();
+            // Calculation();
         })
     });
 });

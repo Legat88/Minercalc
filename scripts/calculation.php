@@ -22,6 +22,7 @@ foreach ($new_array as $key=>$value) {
                 <tr>
                     <th>Name of coin</th>
                     <th>Code</th>
+                    <th>Algo</th>
                     <th>Qty</th>
                     <th>Price</th>
                     <th>Difficulty</th>
@@ -105,6 +106,7 @@ foreach ($new_array as $key=>$value) {
                             echo '<tr id="'.$coin_code.'" class="coin_row">
                     <td>'.$coin_name.'</td>
                     <td>'.$coin_code.'</td>
+                    <td>' . $algo . '</td>
                     <td class="qty">'.number_format($qty, 5).'</td>
                     <td>$ '.number_format($price, 3).'</td>
                     <td>'.number_format($difficulty,3, ".", " ").'</td>
@@ -118,7 +120,7 @@ foreach ($new_array as $key=>$value) {
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th colspan="6" class="ts-pager">
+                    <th colspan="7" class="ts-pager">
                         <div class="form-inline justify-content-center">
                             <div class="btn-group btn-group-sm mx-1" role="group">
                                 <button type="button" class="btn btn-primary first" title="first">⇤</button>
@@ -145,17 +147,17 @@ foreach ($new_array as $key=>$value) {
                 $(document).ready(function () {
 
                     $('div.info').hide();
-                    $('table.info')
-                        .tablesorter({
-                            theme: "bootstrap",
-                            sortList: [5, 0]
-                        })
-                        .tablesorterPager({
-                            container: $(".ts-pager"),
-                            cssGoto: ".pagenum",
-                            removeRows: false,
-                            output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
-                        });
+//                    $('table.info')
+//                        .tablesorter({
+////                            theme: "bootstrap",
+////                            sortList: [6, 0]
+//                        })
+//                        .tablesorterPager({
+//                            container: $(".ts-pager"),
+//                            cssGoto: ".pagenum",
+//                            removeRows: false,
+//                            output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+//                        });
                     $('html, body').animate({
                         scrollTop: $('#coinsInfo').offset().top
                     }, 1000);

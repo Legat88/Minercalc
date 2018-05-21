@@ -25,7 +25,6 @@ require "scripts/db.php"; ?>
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-
 <div class="container-fluid">
     <div class="row align-items-center" id="header">
         <div class="col">
@@ -47,6 +46,7 @@ require "scripts/db.php"; ?>
                     <div class="col-xl-2">
                         <input type="number" class="form-control qty" placeholder="Qty" id="qtyVideocards" min="1"
                                oninput="validity.valid||(value='');">
+                        <i class="fa fa-spinner fa-pulse fa-lg fa-fw" id="spinner_gpu" aria-hidden="true"></i>
                     </div>
                     <div class="col-xl-10">
                         <select class="form-control" id="gpu_select">
@@ -66,6 +66,7 @@ require "scripts/db.php"; ?>
                     <div class="col-xl-2">
                         <input type="number" class="form-control qty" placeholder="Qty" id="qtyASICs" min="1"
                                oninput="validity.valid||(value='');">
+                        <i class="fa fa-spinner fa-pulse fa-lg fa-fw" id="spinner_asic" aria-hidden="true"></i>
                     </div>
                     <div class="col-xl-10">
                         <select class="form-control" id="asic_select">
