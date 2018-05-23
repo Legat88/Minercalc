@@ -1,7 +1,7 @@
 <?php
 require "db.php";
 $DAY=86400; //секунд в сутках
-$new_array=array_slice($_POST, 0, -2, true);
+$new_array = array_slice($_POST, 0, -4, true);
 foreach ($new_array as $key=>$value) {
     if ($value != 'NaN' and $value>0) {
         $algos[$key]=$value;
@@ -26,6 +26,9 @@ foreach ($new_array as $key=>$value) {
                     <th>Qty</th>
                     <th>Price</th>
                     <th>Difficulty</th>
+                    <th>Income</th>
+                    <th>Power</th>
+                    <th>Power cost</th>
                     <th>Profit</th>
                 </tr>
                 </thead>
@@ -34,6 +37,16 @@ foreach ($new_array as $key=>$value) {
                     $algo_info=$dbh->query("SELECT * FROM algos WHERE name='$algo'");
                     $result_algo=$algo_info->fetch(PDO::FETCH_LAZY);
                     $measure=$result_algo->measure;
+                    $coef = $result_algo->power_coef;
+                    $tdp = $_POST['power'];
+                    $power = $tdp * $coef;
+                    $power_cost = $_POST['power_cost'] / 1000;
+                    if (isset($_POST['interval_profit'])) {
+                        $interval_profit = $_POST['interval_profit'];
+                    } else {
+                        $interval_profit = 1;
+                    }
+                    $power_cost_in_dollars = $power_cost * $power * 24 * $interval_profit;
                     if ($measure=='MH') {
                         $measure=1000000;
                     } elseif ($measure=='GH') {
@@ -50,12 +63,9 @@ foreach ($new_array as $key=>$value) {
                         $blocktime=$result_coin->blocktime;
                         $block_reward=$result_coin->block_reward;
                         $my_hashrate=$value*$measure;
+
                         $interval_diff=$_POST['interval_diff'];
-                        if (isset($_POST['interval_profit'])) {
-                            $interval_profit=$_POST['interval_profit'];
-                        } else {
-                            $interval_profit=1;
-                        }
+
                         if ($coin_code == 'LUX') {
                             if ($interval_diff == 'current') {
                                 $net_info = $dbh->query("SELECT $coin_code as difficulty FROM difficulty WHERE $coin_code > 100 ORDER BY id DESC LIMIT 1");
@@ -103,6 +113,7 @@ foreach ($new_array as $key=>$value) {
                             $result=$stmt->fetch(PDO::FETCH_LAZY);
                             $price=$result->price;
                             $profit=$qty*$price;
+                            $pure_profit = $profit - $power_cost_in_dollars;
                             echo '<tr id="'.$coin_code.'" class="coin_row">
                     <td>'.$coin_name.'</td>
                     <td>'.$coin_code.'</td>
@@ -111,6 +122,9 @@ foreach ($new_array as $key=>$value) {
                     <td>$ '.number_format($price, 3).'</td>
                     <td>'.number_format($difficulty,3, ".", " ").'</td>
                     <td class="profit">$ '.number_format($profit, 2).'</td>
+                    <td>' . $power . ' W</td>
+                    <td>$ ' . $power_cost_in_dollars . '</td>
+                    <td>$ ' . number_format($pure_profit, 2) . '</td>
                         </tr>';
                         }
                     }
@@ -120,7 +134,7 @@ foreach ($new_array as $key=>$value) {
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th colspan="7" class="ts-pager">
+                    <th colspan="10" class="ts-pager">
                         <div class="form-inline justify-content-center">
                             <div class="btn-group btn-group-sm mx-1" role="group">
                                 <button type="button" class="btn btn-primary first" title="first">⇤</button>

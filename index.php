@@ -50,7 +50,7 @@ require "scripts/db.php"; ?>
                     </div>
                     <div class="col-xl-10">
                         <select class="form-control" id="gpu_select">
-                            <option disabled selected>Choose model...</option>
+                            <option disabled selected value="0">Choose model...</option>
                             <? $gpu = $dbh->query("SELECT name FROM GPU")->fetchAll(PDO::FETCH_COLUMN);
                             foreach ($gpu as $g) {
                                 echo '<option>' . $g . '</option>';
@@ -70,7 +70,7 @@ require "scripts/db.php"; ?>
                     </div>
                     <div class="col-xl-10">
                         <select class="form-control" id="asic_select">
-                            <option disabled selected>Choose model...</option>
+                            <option disabled selected value="0">Choose model...</option>
                             <? $asic = $dbh->query("SELECT name FROM ASIC")->fetchAll(PDO::FETCH_COLUMN);
                             foreach ($asic as $a) {
                                 echo '<option>' . $a . '</option>';
@@ -113,7 +113,7 @@ require "scripts/db.php"; ?>
         </div>
         <div class="row">
             <div class="col">
-                <h4 class="text-center">Options: Difficult by
+                <h4 class="text-center" id="options">Options: Difficult by
                     <select class="custom-select" name="interval_diff" onchange="inputDiff()">
                         <option selected>current</option>
                         <option>24h</option>
@@ -127,6 +127,26 @@ require "scripts/db.php"; ?>
                         <option value="30">month</option>
                         <option value="365">year</option>
                     </select>
+                    , Electricity cost
+                    <div class="input-group" id="power_cost">
+                        <input type="number" class="form-control" step="0.05" name="power_cost" id="power_cost" min="0"
+                               value="0">
+                        <div class="input-group-append">
+                            <span class="input-group-text">$/kWh</span>
+                        </div>
+                    </div>
+                </h4>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-2">
+                <h4 class="text-center">Power consumption:<br>
+                    <div class="input-group" id="power">
+                        <input type="number" class="form-control" name="power" id="power">
+                        <div class="input-group-append">
+                            <span class="input-group-text">W</span>
+                        </div>
+                    </div>
                 </h4>
             </div>
         </div>

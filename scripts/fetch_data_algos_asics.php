@@ -13,6 +13,10 @@ if(isset($_POST['get_asic'])) {
     foreach ($hashrate as $key=>$value) {
         $result[$key]=$value;
     }
+    $stmt = $dbh->prepare("SELECT tdp FROM ASIC WHERE name=?");
+    $stmt->execute(array($asic));
+    $tdp_q = $stmt->fetch(PDO::FETCH_LAZY);
+    $tdp = $tdp_q->tdp;
     header('Content-type: application/json');
-    echo json_encode($result[0]);
+    echo json_encode(array('hashrate' => $result[0], 'tdp' => $tdp));
 }

@@ -42,7 +42,7 @@ $(document).ready(function () {
     // function Calculation() {
     $('button#calc').click(function (e) {
         e.preventDefault();
-        if ($('input#qtyVideocards').val() > 0 || $('input#qtyASICs').val() > 0) {
+        if (($('input#qtyVideocards').val() > 0 && $('select#gpu_select').val() !== 0) || ($('input#qtyASICs').val() > 0 && $('select#asic_select').val() !== 0)) {
             $('i#spinner').show();
             var algos = $('form#hashes').serialize();
             $.ajax({
@@ -55,7 +55,7 @@ $(document).ready(function () {
                     $('table.info')
                         .tablesorter({
                             theme: "bootstrap",
-                            sortList: [[6, 1]]
+                            sortList: [[9, 1]]
                         })
                         .tablesorterPager({
                             container: $(".ts-pager"),
@@ -87,10 +87,14 @@ $(document).ready(function () {
                 get_gpu: gpuName
             }
         }).done(function (data) {
-            Object.keys(data).forEach(function (key) {
-                var newValue = data[key] * qtyGpu;
+            console.log(data);
+            var hashrate = data.hashrate;
+            var tdp = data.tdp;
+            Object.keys(hashrate).forEach(function (key) {
+                var newValue = hashrate[key] * qtyGpu;
                 $('#' + key + '.hashes').val(newValue);
             });
+            $('input#power').val(tdp * qtyGpu);
             $('i#spinner_gpu').hide();
             // Calculation();
         })
@@ -108,10 +112,14 @@ $(document).ready(function () {
                 get_asic: asicName
             }
         }).done(function (data) {
-            Object.keys(data).forEach(function (key) {
-                var newValue = data[key] * qtyASIC;
+            console.log(data);
+            var hashrate = data.hashrate;
+            var tdp = data.tdp;
+            Object.keys(hashrate).forEach(function (key) {
+                var newValue = hashrate[key] * qtyASIC;
                 $('#' + key + '.hashes').val(newValue);
             });
+            $('input#power').val(tdp * qtyASIC);
             $('i#spinner_asic').hide();
             // Calculation();
         })

@@ -59,7 +59,8 @@ div#coinsInfo select, option:checked  {
 option {
     color: black;
 }
-.custom-select {
+
+select.custom-select {
     line-height: 1 !important;
     vertical-align: baseline !important;
     width: auto !important;
@@ -104,4 +105,29 @@ thead > tr > th {
 table {
     overflow-y: auto;
 }
+
+div#power_cost {
+    width: auto !important;
+    display: inline-flex;
+    vertical-align: top;
+    height: 36px;
+}
+
+input#power_cost {
+    width: 82px !important;
+    font-size: 22px;
+}
+
+div#power_cost, h4#options {
+    margin-bottom: 4px;
+}
+
+input#power {
+    font-size: 22px;
+    width: 82px !important;
+}
+
+/*div#power {*/
+/*width: 40px;*/
+/*}*/
  

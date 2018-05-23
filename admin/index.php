@@ -993,6 +993,25 @@ require "../scripts/db.php";
                         <option value="30">month</option>
                         <option value="365">year</option>
                     </select>
+                    , Electricity cost
+                    <div class="input-group" id="power_cost">
+                        <input type="number" class="form-control" step="0.05" id="power_cost" min="0" value="0">
+                        <div class="input-group-append">
+                            <span class="input-group-text">$/kWh</span>
+                        </div>
+                    </div>
+                </h4>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-2">
+                <h4 class="text-center">Power consumption:<br>
+                    <div class="input-group" id="power">
+                        <input type="number" class="form-control" name="power" id="power">
+                        <div class="input-group-append">
+                            <span class="input-group-text">W</span>
+                        </div>
+                    </div>
                 </h4>
             </div>
         </div>
