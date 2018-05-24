@@ -98,6 +98,13 @@ require "../scripts/db.php";
                             </div>
                             <div class="row">
                                 <div class="col">
+                                    <h5 class="text-center">TDP of GPU:</h5>
+                                    <input type="number" class="form-control" name="tdp" placeholder="TDP of GPU"
+                                           min="0">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
                                     <h3 class="text-center">Algos:</h3>
                                 </div>
                             </div>
@@ -141,6 +148,13 @@ require "../scripts/db.php";
                                         $gpu = null;
                                         ?>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="text-center">TDP of GPU:</h5>
+                                    <input type="number" class="form-control" name="tdp" placeholder="TDP of GPU"
+                                           min="0" id="tdp_gpu">
                                 </div>
                             </div>
                             <div class="row">
@@ -221,6 +235,13 @@ require "../scripts/db.php";
                             </div>
                             <div class="row">
                                 <div class="col">
+                                    <h5 class="text-center">TDP of ASIC:</h5>
+                                    <input type="number" class="form-control" name="tdp" placeholder="TDP of ASIC"
+                                           min="0">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
                                     <h3 class="text-center">Algos:</h3>
                                 </div>
                             </div>
@@ -266,6 +287,14 @@ require "../scripts/db.php";
                                     </select>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="text-center">TDP of ASIC:</h5>
+                                    <input type="number" class="form-control" name="tdp" placeholder="TDP of ASIC"
+                                           min="0" id="tdp_asic">
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col">
                                     <h3 class="text-center">Algos:</h3>
@@ -359,6 +388,13 @@ require "../scripts/db.php";
                                     <input type="text" class="form-control" name="miner" placeholder="Name of miner">
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="text-center">Power coefficient:</h6>
+                                    <input type="number" class="form-control" name="power_coef"
+                                           placeholder="Coefficient" min="0" value="1" step="0.05">
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -413,6 +449,13 @@ require "../scripts/db.php";
                                 <div class="col">
                                     <h6 class="text-center">Miner:</h6>
                                     <input type="text" class="form-control" name="miner" placeholder="Name of miner" id="miner">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="text-center">Power coefficient:</h6>
+                                    <input type="number" class="form-control" name="power_coef"
+                                           placeholder="Coefficient" id="power_coef" min="0" step="0.05">
                                 </div>
                             </div>
                         </div>
@@ -995,7 +1038,8 @@ require "../scripts/db.php";
                     </select>
                     , Electricity cost
                     <div class="input-group" id="power_cost">
-                        <input type="number" class="form-control" step="0.05" id="power_cost" min="0" value="0">
+                        <input type="number" class="form-control" step="0.05" name="power_cost" id="power_cost" min="0"
+                               value="0">
                         <div class="input-group-append">
                             <span class="input-group-text">$/kWh</span>
                         </div>

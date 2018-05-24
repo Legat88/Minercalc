@@ -87,7 +87,6 @@ $(document).ready(function () {
                 get_gpu: gpuName
             }
         }).done(function (data) {
-            console.log(data);
             var hashrate = data.hashrate;
             var tdp = data.tdp;
             Object.keys(hashrate).forEach(function (key) {

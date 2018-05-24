@@ -208,9 +208,12 @@ $(document).ready(function () {
                 get_gpu: gpuName
             }
         }).done(function(data) {
-            Object.keys(data).forEach(function (key) {
-                $('input#'+key+'.edit').val(data[key]);
+            var hashrate = data.hashrate;
+            var tdp = data.tdp;
+            Object.keys(hashrate).forEach(function (key) {
+                $('input#' + key + '.edit').val(hashrate[key]);
             });
+            $('input#tdp_gpu').val(tdp);
         });
     });
     $('select#asic_name_edit').change(function () {
@@ -223,9 +226,12 @@ $(document).ready(function () {
                 get_asic: asicName
             }
         }).done(function(data) {
-            Object.keys(data).forEach(function (key) {
-                $('input#'+key+'.edit').val(data[key]);
+            var hashrate = data.hashrate;
+            var tdp = data.tdp;
+            Object.keys(hashrate).forEach(function (key) {
+                $('input#' + key + '.edit').val(hashrate[key]);
             });
+            $('input#tdp_asic').val(tdp);
         });
     });
     $('select#algo_name_edit').change(function () {
@@ -242,6 +248,8 @@ $(document).ready(function () {
             $('input#miner').val(miner);
             var measure=data.measure;
             $('select#measure').val(measure);
+            var coef = data.power_coef;
+            $('input#power_coef').val(coef);
         });
     });
 

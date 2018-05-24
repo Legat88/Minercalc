@@ -1,7 +1,8 @@
 <?php
 require "db.php";
 $asic_name=$_POST['asic_name'];
-$algos=array_slice($_POST, 1);
+$tdp = $_POST['tdp'];
+$algos = array_slice($_POST, 2);
 foreach ($algos as $algo=>$value) {
     if ($value !=NULL) {
         $new_array_algo[]=$algo;
@@ -10,4 +11,4 @@ foreach ($algos as $algo=>$value) {
 }
 $algos=implode(', ', $new_array_algo);
 $hashes=implode(', ', $new_array_hashes);
-$stmt=$dbh->query("INSERT INTO ASIC (name, $algos) VALUES ('$asic_name', $hashes)");
+$stmt = $dbh->query("INSERT INTO ASIC (name, tdp, $algos) VALUES ('$asic_name', $tdp, $hashes)");
