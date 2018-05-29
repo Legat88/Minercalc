@@ -99,8 +99,13 @@ require "../scripts/db.php";
                             <div class="row">
                                 <div class="col">
                                     <h5 class="text-center">TDP of GPU:</h5>
-                                    <input type="number" class="form-control" name="tdp" placeholder="TDP of GPU"
-                                           min="0">
+                                    <div class="input-group" id="power">
+                                        <input type="number" class="form-control" name="tdp" placeholder="TDP of GPU"
+                                               min="0">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">W</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -153,8 +158,13 @@ require "../scripts/db.php";
                             <div class="row">
                                 <div class="col">
                                     <h5 class="text-center">TDP of GPU:</h5>
-                                    <input type="number" class="form-control" name="tdp" placeholder="TDP of GPU"
-                                           min="0" id="tdp_gpu">
+                                    <div class="input-group" id="power">
+                                        <input type="number" class="form-control" name="tdp" placeholder="TDP of GPU"
+                                               min="0" id="tdp_gpu">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">W</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -406,7 +416,6 @@ require "../scripts/db.php";
             </div>
         </div>
     </div>
-
     <!-- Modal edit algo -->
     <div class="modal fade bd-example-modal-lg" id="editAlgoModal" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
         <div class="modal-dialog" role="document">

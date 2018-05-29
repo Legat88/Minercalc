@@ -1,5 +1,6 @@
 <?php
 require "db.php";
+require "numberAbbreviation.php";
 $DAY=86400; //секунд в сутках
 $new_array = array_slice($_POST, 0, -4, true);
 foreach ($new_array as $key=>$value) {
@@ -119,12 +120,12 @@ foreach ($new_array as $key=>$value) {
                     <td>'.$coin_code.'</td>
                     <td>' . $algo . '</td>
                     <td class="qty">'.number_format($qty, 5).'</td>
-                    <td>$ '.number_format($price, 3).'</td>
-                    <td>'.number_format($difficulty,3, ".", " ").'</td>
-                    <td class="profit">$ '.number_format($profit, 2).'</td>
-                    <td>' . $power . ' W</td>
-                    <td>$ ' . $power_cost_in_dollars . '</td>
-                    <td>$ ' . number_format($pure_profit, 2) . '</td>
+                    <td>$' . number_format($price, 3) . '</td>
+                    <td>' . numberAbbreviation($difficulty) . '</td>
+                    <td class="profit">$' . number_format($profit, 2) . '</td>
+                    <td>' . $power . 'W</td>
+                    <td>$' . $power_cost_in_dollars . '</td>
+                    <td>$' . number_format($pure_profit, 2) . '</td>
                         </tr>';
                         }
                     }
