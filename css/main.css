@@ -5,6 +5,10 @@ html, body {
     /*flex-wrap: wrap;*/
     /*align-content: flex-start;*/
 }
+
+#intro {
+    overflow-x: hidden;
+}
 #content, div#coinsInfo {
     background: rgba(188, 170, 164, 0.32) !important;
     padding-bottom: 10px;
@@ -78,17 +82,9 @@ select.custom-select {
 #footer {
     background-color: #1D1D1D;
     color: white;
-    min-height: 220px;
+    min-height: 140px;
     opacity: 0.7;
-    padding-top: 30px;
-}
-.size32 {
-    font-size: 32px;
-    margin-bottom: 0;
-}
-.size24 {
-    font-size: 22px;
-    margin-bottom: 0;
+    padding-top: 5px;
 }
 
 i#spinner, #spinner_asic, #spinner_gpu {
@@ -106,25 +102,20 @@ table {
     overflow-y: auto;
 }
 
-div#power_cost {
-    width: auto !important;
+div#power_cost, div#power {
     display: inline-flex;
     vertical-align: top;
     height: 36px;
+    width: 150px;
 }
 
-input#power_cost {
-    width: 82px !important;
-    font-size: 22px;
+input#power_cost, input#power {
+    /*min-width: 82px !important;*/
+    font-size: 1.25rem;
 }
 
-div#power_cost, h4#options {
+div#power_cost, h4#options, div#power {
     margin-bottom: 4px;
-}
-
-input#power {
-    font-size: 22px;
-    width: 82px !important;
 }
 
 /*div#power {*/

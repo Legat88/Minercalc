@@ -2,7 +2,7 @@
     $('div.preloader').hide();
     var clicks = 0;
     var winHeight = $(window).height();
-    $('div#content').css('min-height', winHeight - 320);
+    $('div#content').css('min-height', winHeight - 240);
     $(".showingData").click(function () {
         clicks++;
         if (clicks % 2 != 0) {

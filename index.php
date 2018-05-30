@@ -40,15 +40,15 @@ require "scripts/db.php"; ?>
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-xl-3">
+            <div class="col-sm-10 col-md-5 col-lg-4 col-xl-3">
                 <h4 class="text-center">Videocards:</h4>
-                <div class="form-row">
-                    <div class="col-xl-2">
+                <div class="form-row justify-content-center">
+                    <div class="col-2 col-md-3 col-lg-2">
                         <input type="number" class="form-control qty" placeholder="Qty" id="qtyVideocards" min="1"
                                oninput="validity.valid||(value='');">
                         <i class="fa fa-spinner fa-pulse fa-lg fa-fw" id="spinner_gpu" aria-hidden="true"></i>
                     </div>
-                    <div class="col-xl-10">
+                    <div class="col-10 col-md-9 col-lg-10">
                         <select class="form-control" id="gpu_select">
                             <option disabled selected value="0">Choose model...</option>
                             <? $gpu = $dbh->query("SELECT name FROM GPU")->fetchAll(PDO::FETCH_COLUMN);
@@ -60,15 +60,15 @@ require "scripts/db.php"; ?>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3">
+            <div class="col-sm-10 col-md-5 col-lg-4 col-xl-3">
                 <h4 class="text-center">ASICs:</h4>
-                <div class="form-row">
-                    <div class="col-xl-2">
+                <div class="form-row justify-content-center">
+                    <div class="col-2 col-md-3 col-lg-2">
                         <input type="number" class="form-control qty" placeholder="Qty" id="qtyASICs" min="1"
                                oninput="validity.valid||(value='');">
                         <i class="fa fa-spinner fa-pulse fa-lg fa-fw" id="spinner_asic" aria-hidden="true"></i>
                     </div>
-                    <div class="col-xl-10">
+                    <div class="col-10 col-md-9 col-lg-10">
                         <select class="form-control" id="asic_select">
                             <option disabled selected value="0">Choose model...</option>
                             <? $asic = $dbh->query("SELECT name FROM ASIC")->fetchAll(PDO::FETCH_COLUMN);
@@ -94,7 +94,7 @@ require "scripts/db.php"; ?>
         </h2>
     </div>
     <form action="" id="hashes" method="post">
-        <div class="form-group col-8 text-center mx-auto collapse" id="algos">
+        <div class="form-group col-xl-8 col-md-10 text-center mx-auto collapse" id="algos">
             <div class="row">
                 <div class="col">
                     <h3 class="text-center">Algos:</h3>
@@ -113,43 +113,69 @@ require "scripts/db.php"; ?>
         </div>
         <div class="row">
             <div class="col">
-                <h4 class="text-center" id="options">Options: Difficult by
-                    <select class="custom-select" name="interval_diff" onchange="inputDiff()">
-                        <option selected>current</option>
-                        <option>24h</option>
-                        <option>week</option>
-                        <option>month</option>
-                    </select>
-                    , Profit in
-                    <select class="custom-select" name="interval_profit" onchange="inputDiff()">
-                        <option selected value="1">24h</option>
-                        <option value="7">week</option>
-                        <option value="30">month</option>
-                        <option value="365">year</option>
-                    </select>
-                    , Electricity cost
-                    <div class="input-group" id="power_cost">
-                        <input type="number" class="form-control" step="0.05" name="power_cost" id="power_cost" min="0"
-                               value="0">
-                        <div class="input-group-append">
-                            <span class="input-group-text">$/kWh</span>
+                <h4 class="text-center" id="options">Options:
+                    <div class="row justify-content-center">
+                        <div class="col col-sm-8 col-md-6 col-xl-4">
+                            <div class="row justify-content-center">
+                                <div class="col-6 col-xl-6">
+                                    Difficulty by
+                                </div>
+                                <div class="col-6 col-xl-6">
+                                    Profit in
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-6 col-xl-6">
+                                    <select class="custom-select" name="interval_diff" onchange="inputDiff()">
+                                        <option selected>current</option>
+                                        <option>24h</option>
+                                        <option>week</option>
+                                        <option>month</option>
+                                    </select>
+                                </div>
+                                <div class="col-6 col-xl-6">
+                                    <select class="custom-select" name="interval_profit" onchange="inputDiff()">
+                                        <option selected value="1">24h</option>
+                                        <option value="7">week</option>
+                                        <option value="30">month</option>
+                                        <option value="365">year</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-6 col-xl-6 mx-auto">
+                                    Electricity cost
+                                </div>
+                                <div class="col-6 col-xl-6 mx-auto">
+                                    Power consumption
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-6 col-xl-6">
+                                    <div class="input-group" id="power_cost">
+                                        <input type="number" class="form-control" step="0.05" name="power_cost"
+                                               id="power_cost" min="0"
+                                               value="0">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">$/kWh</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-xl-6">
+                                    <div class="input-group" id="power">
+                                        <input type="number" class="form-control" name="power" id="power">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">W</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </h4>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-2">
-                <h4 class="text-center">Power consumption:<br>
-                    <div class="input-group" id="power">
-                        <input type="number" class="form-control" name="power" id="power">
-                        <div class="input-group-append">
-                            <span class="input-group-text">W</span>
-                        </div>
-                    </div>
-                </h4>
-            </div>
-        </div>
+
         <div class="row justify-content-center">
             <div class="col-auto text-center">
                 <button type="button" class="btn btn-primary btn-lg btn-style" id="calc"><i
@@ -169,18 +195,18 @@ require "scripts/db.php"; ?>
 <div class="container-fluid">
     <div class="row justify-content-center" id="footer">
         <div class="col-xl-2 text-center">
-            <p class="size32">Minercalc.com</p>
+            <h2>Minercalc.com</h2>
         </div>
         <div class="col-xl-2 text-center">
-            <p class="size32">My Contacts:</p>
-            <p class="size24"><i class="fa fa-envelope-o" aria-hidden="true"></i> legat88@gmail.com</p>
-            <p class="size24"><i class="fa fa-vk" aria-hidden="true"></i> vk.com/legat88</p>
-            <p class="size24"><i class="fa fa-twitter" aria-hidden="true"></i> @Legat88</p>
+            <h2>My Contacts:</h2>
+            <h6><i class="fa fa-envelope-o" aria-hidden="true"></i> legat88@gmail.com</h6>
+            <h6><i class="fa fa-vk" aria-hidden="true"></i> vk.com/legat88</h6>
+            <h6><i class="fa fa-twitter" aria-hidden="true"></i> @Legat88</h6>
         </div>
         <div class="col-xl-4 text-center">
-            <p class="size32">Donate:</p>
-            <p class="size24">BTC: 1CD75dQy3X7YfCXdHuVReKHUCLWBudNCFY</p>
-            <p class="size24">LTC: LUPZRB7pohLZNzYyGevmKXnBvT9UpmAH78</p>
+            <h2>Donate:</h2>
+            <h6>BTC: 1CD75dQy3X7YfCXdHuVReKHUCLWBudNCFY</h6>
+            <h6>LTC: LUPZRB7pohLZNzYyGevmKXnBvT9UpmAH78</h6>
         </div>
     </div>
 </div>

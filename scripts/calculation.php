@@ -17,8 +17,7 @@ foreach ($new_array as $key=>$value) {
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-12 col-md-9 col-xl-6">
-            <table class="table table-responsive-sm table-hover table-bordered text-center info">
+        <table class="table table-responsive-md table-hover table-bordered text-center info col-lg-6 col">
                 <thead>
                 <tr>
                     <th>Name of coin</th>
@@ -123,7 +122,7 @@ foreach ($new_array as $key=>$value) {
                     <td>$' . number_format($price, 3) . '</td>
                     <td>' . numberAbbreviation($difficulty) . '</td>
                     <td class="profit">$' . number_format($profit, 2) . '</td>
-                    <td>' . $power . 'W</td>
+                    <td>' . number_format($power, 0, '.', ',') . 'W</td>
                     <td>$' . $power_cost_in_dollars . '</td>
                     <td>$' . number_format($pure_profit, 2) . '</td>
                         </tr>';
@@ -272,7 +271,6 @@ foreach ($new_array as $key=>$value) {
             <!--                    </li>-->
             <!--                </ul>-->
             <!--            </nav>-->
-        </div>
 
     </div>
     <div class="row justify-content-center">
