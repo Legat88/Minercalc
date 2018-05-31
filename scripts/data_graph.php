@@ -59,10 +59,10 @@ echo '<script type="text/javascript">
             title: {
                 text: \'Difficulty\'
             },
-            
-            yAxis : {
-                min: 0
-            },
+//            
+//            yAxis : {
+//                min: 0
+//            },
 
             series: [{
                 name: \'Difficulty\',

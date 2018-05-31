@@ -189,7 +189,6 @@ foreach ($new_array as $key=>$value) {
                             dataType: "json",
                             data: {coin_code: code}
                         }).done(function (result) {
-                            console.log(result);
                             var coin = result['coin'],
                                 algo = result['algo'],
                                 url = result['url'],
