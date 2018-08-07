@@ -99,7 +99,7 @@ foreach ($new_array as $key=>$value) {
                         } else {
                             if ($algo=='Ethash') {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty);
-                            } elseif ($algo=='Equihash') {
+                            } elseif ($algo == 'Equihash' || $algo == 'Equihash_144_5') {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty*8192);
                             } elseif ($algo == 'Cryptonight_v7') {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty);
@@ -210,7 +210,7 @@ foreach ($new_array as $key=>$value) {
                                     '--user &ltwallet>.&ltworker> <br>' +
                                     '--pass &ltpassword> '
                             } else if (miner.match(/tdxminer/i)) {
-                                bat = './tdxminer -a lyra2z -o ' + pool_url + ':' + port + ' -u &ltusername> -p &ltpassword>'
+                                bat = 'tdxminer -a lyra2z -o stratum+tcp://' + pool_url + ':' + port + ' -u &ltwallet> -p &ltpassword>'
                             }
 
                             $('div#container').remove();
