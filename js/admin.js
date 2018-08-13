@@ -297,7 +297,12 @@ $(document).ready(function () {
                 var rpcparameter = data.rpc_parameter;
                 $('input#rpcparameterEdit').val(rpcparameter);
             }
-
+            var coinmarketcap = data.coinmarketcap;
+            if (coinmarketcap === 1) {
+                $('input#coinmarketcapEdit').prop('checked', true);
+            } else {
+                $('input#coinmarketcapEdit').prop('checked', false);
+            }
         });
     });
     $('select#pool_name_remove').change(function () {

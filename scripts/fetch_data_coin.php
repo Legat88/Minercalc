@@ -6,11 +6,11 @@ if(isset($_POST['get_coin'])) {
     $stmt->execute(array($coin));
     $rpc = $stmt->fetch(PDO::FETCH_LAZY);
     if ($rpc['rpc'] == 0) {
-        $stmt = $dbh->prepare("SELECT code, algo, block_reward, url, parameter, addition, rpc FROM coins WHERE name=?");
+        $stmt = $dbh->prepare("SELECT code, algo, block_reward, url, parameter, addition, rpc, coinmarketcap FROM coins WHERE name=?");
         $stmt->execute(array($coin)); //Обязательно массив, строку не возьмет
         $result = $stmt->fetch(PDO::FETCH_LAZY);
     } else {
-        $stmt = $dbh->prepare("SELECT code, algo, block_reward, rpc, rpcuser, rpcpassword, rpcport, rpc_method, rpc_parameter FROM coins WHERE name=?");
+        $stmt = $dbh->prepare("SELECT code, algo, block_reward, rpc, rpcuser, rpcpassword, rpcport, rpc_method, rpc_parameter, coinmarketcap FROM coins WHERE name=?");
         $stmt->execute(array($coin)); //Обязательно массив, строку не возьмет
         $result = $stmt->fetch(PDO::FETCH_LAZY);
     }

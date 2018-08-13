@@ -617,6 +617,16 @@ require "../scripts/db.php";
                                     </div>
                                 </div>
                             </div>
+                            <div class="row justify-content-center">
+                                <div class="col-auto custom-control custom-checkbox">
+                                    <h6>
+                                        <input type="checkbox" class="form-control custom-control-input"
+                                               id="coinmarketcap"
+                                               name="coinmarketcap">
+                                        <label class="custom-control-label" for="coinmarketcap">Coinmarketcap</label>
+                                    </h6>
+                                </div>
+                            </div>
 
                         </div>
                     </form>
@@ -741,6 +751,17 @@ require "../scripts/db.php";
                                                id="rpcparameterEdit"
                                                placeholder="RPC parameter">
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-auto custom-control custom-checkbox">
+                                    <h6>
+                                        <input type="checkbox" class="form-control custom-control-input"
+                                               id="coinmarketcapEdit"
+                                               name="coinmarketcap">
+                                        <label class="custom-control-label"
+                                               for="coinmarketcapEdit">Coinmarketcap</label>
+                                    </h6>
                                 </div>
                             </div>
                         </div>
