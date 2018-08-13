@@ -621,9 +621,10 @@ require "../scripts/db.php";
                                 <div class="col-auto custom-control custom-checkbox">
                                     <h6>
                                         <input type="checkbox" class="form-control custom-control-input"
-                                               id="coinmarketcap"
+                                               id="coinmarketcapCheck"
                                                name="coinmarketcap">
-                                        <label class="custom-control-label" for="coinmarketcap">Coinmarketcap</label>
+                                        <label class="custom-control-label"
+                                               for="coinmarketcapCheck">Coinmarketcap</label>
                                     </h6>
                                 </div>
                             </div>

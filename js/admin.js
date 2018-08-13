@@ -115,6 +115,7 @@ $(document).ready(function () {
     });
     $('button#addCoin').click(function () {
         var add_coin = $('form#addCoin').serialize();
+        console.log(add_coin);
         $.ajax({
             url: '../scripts/add_coin.php',
             type: 'POST',
