@@ -1,18 +1,14 @@
 <?php
 require "db.php";
+require "api_call.php";
 require_once('easybitcoin.php');
-$arrContextOptions = array(
-    "ssl" => array(
-        "verify_peer" => false,
-        "verify_peer_name" => false,
-    ),
-);
 $stmt = $dbh->query("SELECT * FROM coins");
 while ($result = $stmt->fetch(PDO::FETCH_LAZY)) {
     $rpc_mode = $result->rpc;
     if ($rpc_mode == 0) {
         $url = $result->url;
-        if (!$data = file_get_contents($url, false, stream_context_create($arrContextOptions))) {
+        $data = apiCall($url);
+        if (!$data) {
             continue;
         } else {
             $coin[] = $result->code;
@@ -53,5 +49,6 @@ while ($result = $stmt->fetch(PDO::FETCH_LAZY)) {
 }
 $coins = implode(', ', $coin);
 $difficulties = join(', ', $difficulty);
-$dbh->query("INSERT INTO difficulty (datetime, $coins) VALUES (NOW(), $difficulties)");
+$query = "INSERT INTO difficulty (datetime, $coins) VALUES (NOW(), $difficulties)";
+$dbh->query($query);
 ?>
