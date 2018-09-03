@@ -128,6 +128,7 @@ $(document).ready(function () {
     });
     $('button#editCoin').click(function () {
         var edit_coin = $('form#editCoin').serialize();
+        console.log(edit_coin);
         $.ajax({
             url: '../scripts/edit_coin.php',
             type: 'POST',

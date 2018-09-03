@@ -4,7 +4,11 @@ $coin_name=$_POST['coin_name'];
 $code=$_POST['code'];
 $algo=$_POST['algo'];
 $blockreward=$_POST['blockreward'];
-$coinmarketcap = $_POST['coinmarketcap'];
+if (isset($_POST['coinmarketcap'])) {
+    $coinmarketcap = 1;
+} else {
+    $coinmarketcap = 0;
+}
 if (isset($_POST['rpc'])) {
     $rpc = 1;
     $rpcuser = $_POST['rpcuser'];
