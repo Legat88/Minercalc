@@ -51,7 +51,7 @@ require "scripts/db.php"; ?>
                     <div class="col-10 col-md-9 col-lg-10">
                         <select class="form-control" id="gpu_select">
                             <option disabled selected value="0">Choose model...</option>
-                            <? $gpu = $dbh->query("SELECT name FROM GPU")->fetchAll(PDO::FETCH_COLUMN);
+                            <? $gpu = $dbh->query("SELECT name FROM GPU ORDER BY name ASC")->fetchAll(PDO::FETCH_COLUMN);
                             foreach ($gpu as $g) {
                                 echo '<option>' . $g . '</option>';
                             }
@@ -71,7 +71,7 @@ require "scripts/db.php"; ?>
                     <div class="col-10 col-md-9 col-lg-10">
                         <select class="form-control" id="asic_select">
                             <option disabled selected value="0">Choose model...</option>
-                            <? $asic = $dbh->query("SELECT name FROM ASIC")->fetchAll(PDO::FETCH_COLUMN);
+                            <? $asic = $dbh->query("SELECT name FROM ASIC ORDER BY name ASC")->fetchAll(PDO::FETCH_COLUMN);
                             foreach ($asic as $a) {
                                 echo '<option>' . $a . '</option>';
                             }
