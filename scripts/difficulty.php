@@ -1,6 +1,7 @@
 <?php
 require "db.php";
 require "api_call.php";
+require "api_logging.php";
 require_once('easybitcoin.php');
 $stmt = $dbh->query("SELECT * FROM coins");
 while ($result = $stmt->fetch(PDO::FETCH_LAZY)) {
@@ -8,13 +9,15 @@ while ($result = $stmt->fetch(PDO::FETCH_LAZY)) {
     if ($rpc_mode == 0) {
         $url = $result->url;
         $data = apiCall($url);
-        if (!$data) {
+        $info = json_decode($data);
+        if (!$data || json_last_error() !== JSON_ERROR_NONE) {
+            $text_error = 'Ошибка API монеты ' . $result->code . ' по адресу: ' . $url;
+            api_error($text_error);
             continue;
         } else {
             $coin[] = $result->code;
             $parameter = $result->parameter;
             $addition = $result->addition;
-            $info = json_decode($data);
             if ($addition != NULL && $parameter != NULL) {
                 $difficulty[] = $info->$addition->$parameter;
             } elseif ($addition == NULL && $parameter != NULL) {
