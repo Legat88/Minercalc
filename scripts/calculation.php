@@ -99,9 +99,9 @@ foreach ($new_array as $key=>$value) {
                         } else {
                             if ($algo=='Ethash') {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty);
-                            } elseif ($algo == 'Equihash' || $algo == 'Equihash_144_5' || $algo == 'Equihash_192_7') {
+                            } elseif (($algo == 'Equihash' && $coin_code != 'HUSH') || $algo == 'Equihash_144_5' || $algo == 'Equihash_192_7') {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty*8192);
-                            } elseif ($algo == 'Cryptonight_v7') {
+                            } elseif ($algo == 'Cryptonight_v7' || $coin_code == 'HUSH') {
                                 $qty=($my_hashrate*$block_reward*$DAY*$interval_profit)/($difficulty);
                             } elseif ($algo == 'SK1024') {
                                 $qty = ($my_hashrate * $block_reward * $DAY * $interval_profit) / ($difficulty * 32288028000);
