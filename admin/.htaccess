@@ -2,3 +2,4 @@
     AuthName "Please login"
     AuthUserFile "/home/user/.htpasswd"
     Require valid-user
+    DirectoryIndex index.php

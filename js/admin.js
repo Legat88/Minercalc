@@ -199,6 +199,14 @@ $(document).ready(function () {
             }
         })
     });
+    $('button#clearLogs').click(function () {
+        $.ajax({
+            url: '../scripts/clear_logs.php',
+            success: function () {
+                location.reload();
+            }
+        })
+    });
 
     $('select#gpu_name_edit').change(function () {
         var gpuName = $('select#gpu_name_edit').val();
