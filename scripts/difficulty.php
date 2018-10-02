@@ -9,7 +9,7 @@ while ($result = $stmt->fetch(PDO::FETCH_LAZY)) {
     if ($rpc_mode == 0) {
         $url = $result->url;
         $data = apiCall($url);
-        $info = json_decode($data);
+        $info = json_decode($data, true);
         if (!$data || json_last_error() !== JSON_ERROR_NONE) {
             $text_error = 'Ошибка API монеты ' . $result->code . ' по адресу: ' . $url;
             api_error($text_error);
@@ -19,9 +19,21 @@ while ($result = $stmt->fetch(PDO::FETCH_LAZY)) {
             $parameter = $result->parameter;
             $addition = $result->addition;
             if ($addition != NULL && $parameter != NULL) {
-                $difficulty[] = $info->$addition->$parameter;
+                $additions = explode(" ", $addition);
+                $num_additions = count($additions);
+                if ($num_additions == 1) {
+                    $difficulty[] = $info[$additions[0]][$parameter];
+                } elseif ($num_additions == 2) {
+                    $difficulty[] = $info[$additions[0]][$additions[1]][$parameter];
+                } elseif ($num_additions == 3) {
+                    $difficulty[] = $info[$additions[0]][$additions[1]][$additions[2]][$parameter];
+                } elseif ($num_additions == 4) {
+                    $difficulty[] = $info[$additions[0]][$additions[1]][$additions[2]][$additions[3]][$parameter];
+                } elseif ($num_additions == 5) {
+                    $difficulty[] = $info[$additions[0]][$additions[1]][$additions[2]][$additions[3]][$additions[4]][$parameter];
+                }
             } elseif ($addition == NULL && $parameter != NULL) {
-                $difficulty[] = $info->$parameter;
+                $difficulty[] = $info[$parameter];
             } elseif ($addition == NULL && $parameter == NULL) {
                 $difficulty[] = $info;
             }

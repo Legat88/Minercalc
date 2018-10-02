@@ -97,12 +97,10 @@ foreach ($new_array as $key => $value) {
                     if (!$difficulty) {
                         continue;
                     } else {
-                        if ($algo == 'Ethash' || $coin_code == 'ANON') {
+                        if ($algo == 'Ethash' || $coin_code == 'ANON' || $algo == 'Cryptonight_v7' || $coin_code == 'HUSH' || $algo == 'CryptoNight_Heavy' || $algo == 'Equihash_210_9') {
                             $qty = ($my_hashrate * $block_reward * $DAY * $interval_profit) / ($difficulty);
                         } elseif (($algo == 'Equihash' && $coin_code != 'HUSH') || ($algo == 'Equihash_144_5' && $coin_code != 'ANON')) {
                             $qty = ($my_hashrate * $block_reward * $DAY * $interval_profit) / ($difficulty * 8192);
-                        } elseif ($algo == 'Cryptonight_v7' || $coin_code == 'HUSH') {
-                            $qty = ($my_hashrate * $block_reward * $DAY * $interval_profit) / ($difficulty);
                         } elseif ($algo == 'SK1024') {
                             $qty = ($my_hashrate * $block_reward * $DAY * $interval_profit) / ($difficulty * 32288028000);
                         } elseif ($algo == 'ProgPOW') {
