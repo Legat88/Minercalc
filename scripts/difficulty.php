@@ -17,7 +17,7 @@ while ($result = $stmt->fetch(PDO::FETCH_LAZY)) {
         } else {
             $coin[] = $result->code;
             $parameter = $result->parameter;
-            $addition = $result->addition;
+            $addition = trim($result->addition);
             if ($addition != NULL && $parameter != NULL) {
                 $additions = explode(" ", $addition);
                 $num_additions = count($additions);
